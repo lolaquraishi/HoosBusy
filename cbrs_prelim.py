@@ -295,7 +295,7 @@ def create_sample_events() -> list[Event]:
     """Create a diverse set of sample events for demonstration."""
     return [
         Event(
-            name="Friday Open Mic Night",
+            name="UPC Open Mic Night",
             start_time="evening", end_time="night",
             day_of_week=["fri"],
             cost="free", setting="indoor", location="on_grounds", audience="all",
@@ -306,7 +306,7 @@ def create_sample_events() -> list[Event]:
             mood=["energetic", "creative"],
         ),
         Event(
-            name="Saturday Morning Hike",
+            name="Humpback Rock Hike",
             start_time="morning", end_time="afternoon",
             day_of_week=["sat"],
             cost="free", setting="outdoor", location="off_grounds", audience="all",
@@ -372,7 +372,7 @@ def create_sample_events() -> list[Event]:
             mood=["chill", "reflective"],
         ),
         Event(
-            name="Hackathon Weekend",
+            name="HooHacks Hackathon",
             start_time="morning", end_time="night",
             day_of_week=["sat", "sun"],
             cost="free", setting="indoor", location="on_grounds", audience="all",
@@ -426,6 +426,17 @@ def create_sample_events() -> list[Event]:
             commitment_level="drop_in", skill_barrier="intermediate",
             mood=["competitive", "creative"],
         ),
+        Event(
+            name="Springfest",
+            start_time="evening", end_time="night",
+            day_of_week=["sat"],
+            cost="free", setting="indoor", location="on_grounds", audience="all",
+            primary_category=["music", "entertainment", "social"],
+            subcategory=["live_concert"],
+            energy_level="high", social_intensity="crowd",
+            commitment_level="drop_in", skill_barrier="none",
+            mood=["energetic"],
+        ),
     ]
 
 
@@ -447,11 +458,11 @@ def run_demo():
         user,
         selected_categories=["music", "art", "outdoors"],
         selected_subcategories=["open_mic", "jam_session", "hiking", "arts_crafts", "poetry"],
-        selected_moods=["creative", "chill"],
+        selected_moods=["creative", "energetic"],
         preferred_times=["evening"],
         preferred_days=["fri", "sat"],
         preferred_energy="medium",
-        preferred_social="small_group",
+        preferred_social="crowd",
     )
     print(f"User '{user.name}' onboarded.")
     print(f"  Categories: music, art, outdoors")
@@ -466,7 +477,7 @@ def run_demo():
 
     # --- Step 4: Simulate user attending some events ---
     print("\n--- SIMULATING USER BEHAVIOR ---")
-    attended_events = ["Friday Open Mic Night", "Pottery Workshop", "Saturday Morning Hike"]
+    attended_events = ["UPC Open Mic Night", "Jazz Ensemble Concert", "Springfest"]
     for event_name in attended_events:
         event = next(e for e in events if e.name == event_name)
         event_vec = encode_event(event)
@@ -481,7 +492,7 @@ def run_demo():
 
     # --- Step 6: Show the vector for one event (for presentation) ---
     print("\n--- SAMPLE EVENT VECTOR ---")
-    sample = events[0]  # Friday Open Mic Night
+    sample = events[0]  # UPC Open Mic Night
     vec = encode_event(sample)
     print(f"Event: {sample.name}")
     print(f"Vector shape: ({VECTOR_DIM},)")
