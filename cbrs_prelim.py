@@ -484,7 +484,7 @@ def run_demo():
 
     # --- Step 4: Simulate user attending some events ---
     print("\n--- SIMULATING USER BEHAVIOR ---")
-    attended_events = ["Humpback Rock Hike", "Jazz Ensemble Concert", "Yoga on the Lawn"]
+    attended_events = ["Humpback Rock Hike", "Jazz Ensemble Concert", "Springfest"]
     for event_name in attended_events:
         event = next(e for e in events if e.name == event_name)
         event_vec = encode_event(event)
@@ -496,7 +496,7 @@ def run_demo():
     recs = recommend_events(user, events, attended_events, top_n=5)
     for rank, (name, score) in enumerate(recs, 1):
         print(f"  {rank}. {name:40s}  score: {score:.4f}")
-
+'''
     # --- Step 6: Show the vector for one event (for presentation) ---
     print("\n--- SAMPLE EVENT VECTOR ---")
     sample = events[0]  # UPC Open Mic Night
@@ -505,7 +505,7 @@ def run_demo():
     print(f"Vector shape: ({VECTOR_DIM},)")
     print(f"Non-zero positions: {list(np.nonzero(vec)[0])}")
     print(f"Non-zero count: {int(np.count_nonzero(vec))}")
-
+'''
 
 if __name__ == "__main__":
     run_demo()
