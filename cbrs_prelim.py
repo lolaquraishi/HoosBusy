@@ -260,6 +260,7 @@ def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
 def recommend_events(
     user: UserProfile,
     events: list[Event],
+    attended_events: list[str],
     top_n: int = 5
 ) -> list[tuple[str, float]]:
     """
@@ -269,7 +270,13 @@ def recommend_events(
         List of (event_name, similarity_score) tuples, sorted descending.
     """
     # Encode all events into a matrix (num_events x VECTOR_DIM)
-    event_vectors = np.array([encode_event(e) for e in events])
+    event_list = []
+    for e in events:
+        if e.name not in attended_events:
+           event_list.append(encode_event(e))
+
+    #event_vectors = np.array([encode_event(e) for e in events])
+    event_vectors = np.array(event_list)
 
     # Compute all similarities at once via matrix multiplication
     user_norm = np.linalg.norm(user.vector)
@@ -453,7 +460,7 @@ def run_demo():
     print(f"Vector dimensionality: {VECTOR_DIM}\n")
 
     # --- Step 2: Simulate onboarding for a user ---
-    user = UserProfile(name="Demo Student")
+    user = UserProfile(name="Outdoorsy Music Fan")
     initialize_from_onboarding(
         user,
         selected_categories=["music", "art", "outdoors"],
@@ -471,13 +478,13 @@ def run_demo():
 
     # --- Step 3: Get initial recommendations (cold start, onboarding only) ---
     print("\n--- INITIAL RECOMMENDATIONS (onboarding only) ---")
-    recs = recommend_events(user, events, top_n=5)
+    recs = recommend_events(user, events, attended_events=[],top_n=5)
     for rank, (name, score) in enumerate(recs, 1):
         print(f"  {rank}. {name:40s}  score: {score:.4f}")
 
     # --- Step 4: Simulate user attending some events ---
     print("\n--- SIMULATING USER BEHAVIOR ---")
-    attended_events = ["UPC Open Mic Night", "Jazz Ensemble Concert", "Springfest"]
+    attended_events = ["Humpback Rock Hike", "Jazz Ensemble Concert", "Yoga on the Lawn"]
     for event_name in attended_events:
         event = next(e for e in events if e.name == event_name)
         event_vec = encode_event(event)
@@ -486,7 +493,7 @@ def run_demo():
 
     # --- Step 5: Get updated recommendations ---
     print(f"\n--- UPDATED RECOMMENDATIONS (after {len(attended_events)} interactions) ---")
-    recs = recommend_events(user, events, top_n=5)
+    recs = recommend_events(user, events, attended_events, top_n=5)
     for rank, (name, score) in enumerate(recs, 1):
         print(f"  {rank}. {name:40s}  score: {score:.4f}")
 
