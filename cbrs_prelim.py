@@ -133,6 +133,8 @@ class Event:
     mood: list[str] = field(default_factory=lambda: ["chill"])
 
 
+# Initially setting all features to 0.0
+# Encode each feature based on the INDEX_MAP, setting the corresponding index to 1.0 if the value is present
 def encode_event(event: Event) -> np.ndarray:
     """
     Convert an Event into a binary feature vector.
@@ -140,7 +142,6 @@ def encode_event(event: Event) -> np.ndarray:
     One-hot for single-value features, multi-hot for list features.
     """
     vec = np.zeros(VECTOR_DIM)
-
     # Single-value features (one-hot)
     for feature_name in ["start_time", "end_time", "cost", "setting",
                          "location", "audience", "energy_level",
@@ -171,6 +172,8 @@ class UserProfile:
     interaction_count: int = 0
 
 
+# Initialize the user profile vector based on onboarding selections.
+# For each selected feature, set the corresponding index in the vector to 1.0.
 def initialize_from_onboarding(
     user: UserProfile,
     selected_categories: list[str],
@@ -218,7 +221,8 @@ def initialize_from_onboarding(
     if preferred_social and preferred_social in INDEX_MAP["social_intensity"]:
         user.vector[INDEX_MAP["social_intensity"][preferred_social]] = 1.0
 
-
+# Update the user profile vector based on an interaction with an event.
+# Uses an exponential moving average (decay) to blend the event vector into the user profile (essentially updating the user's preferences based on their behavior).
 def update_from_interaction(
     user: UserProfile,
     event_vector: np.ndarray,
@@ -241,6 +245,9 @@ def update_from_interaction(
 # SECTION 4: RECOMMENDATION ENGINE
 # =============================================================================
 
+# We compare the user to an event by 
+# 1. Dot Product: summing the dot product of their features (which counts the number of shared features)
+# 2. Normalize: We divide by the product of the vector sizes to get a cosine similarity score between 0 and 1. This way, we're measuring similarity in preference over size of the profile (since an event could have many features but only a few match the user's preferences)
 def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
     """Compute cosine similarity between two vectors."""
     norm_a = np.linalg.norm(a)
@@ -249,7 +256,7 @@ def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
         return 0.0
     return float(np.dot(a, b) / (norm_a * norm_b))
 
-
+# For each event, we compute the cosine similarity between the user's preference vector and the event's feature vector. We then rank all events by their similarity score and return the top-N recommendations.
 def recommend_events(
     user: UserProfile,
     events: list[Event],
