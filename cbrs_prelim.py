@@ -29,55 +29,70 @@ FEATURE_SCHEMA = {
     "location":         ["on_grounds", "off_grounds"],
     "audience":         ["undergrad", "grad", "all"],
 
-    # --- Primary Categories (~20) ---
-    "primary_category": [
-        "athletics", "academic", "professional", "religious",
-        "cultural", "social", "physical_health", "mental_health",
-        "wellness", "volunteering", "greek_life", "music",
-        "art", "outdoors", "food_drink", "gaming_tech",
-        "entertainment", "community_activism", "hobbies",
-        "travel", "performing_arts", "lgbtq", "science_environment"
-    ],
-
-    # --- Subcategories (abbreviated for demo — expand as needed) ---
-    "subcategory": [
-        # Athletics
-        "recreational", "club_sports", "varsity", "intramural",
-        "free_play", "pickup_game", "tryout", "watch_party",
-        # Academic
-        "study_group", "tutoring", "lecture", "panel_discussion",
-        "debate", "research_showcase", "hackathon", "workshop",
-        "guest_speaker", "trivia",
-        # Professional
-        "networking", "career_fair", "info_session", "resume_prep",
-        "industry_panel", "mentorship", "internship_info", "entrepreneurship",
-        # Music
-        "dj_set", "live_concert", "a_cappella", "band_performance",
-        "open_mic", "karaoke", "jam_session", "choir", "orchestra",
-        # Art
-        "visual_arts", "painting", "photography", "arts_crafts",
-        "poetry", "creative_writing", "improv_comedy", "gallery_opening",
-        # Social
-        "hangout", "game_night", "party", "speed_friending",
-        "mixer", "themed_event", "holiday_social",
-        # Outdoors
-        "hiking", "camping", "rock_climbing", "kayaking",
-        "trail_run", "stargazing",
-        # Food
-        "free_food", "potluck", "cooking_class", "food_tour",
-        "tasting_event", "baking",
-        # Wellness / Mental Health
-        "yoga", "fitness_class", "mindfulness", "support_group",
-        "self_care", "meditation",
-        # Entertainment
-        "movie_screening", "comedy_show", "drag_show", "escape_room",
-        # Gaming & Tech
-        "video_games", "board_games", "tabletop_rpg", "esports",
-        "coding_workshop", "ctf_security",
-        # Volunteering
-        "community_service", "fundraiser", "food_bank",
-        "environmental_cleanup", "awareness_campaign",
-    ],
+    # --- Category Hierarchy ---
+    "category_hierarchy": {
+        "athletics": [
+            "recreational", "club_sports", "varsity", "intramural",
+            "free_play", "pickup_game", "tryout", "watch_party",
+        ],
+        "academic": [
+            "study_group", "tutoring", "lecture", "panel_discussion",
+            "debate", "research_showcase", "hackathon", "workshop",
+            "guest_speaker", "trivia",
+        ],
+        "professional": [
+            "networking", "career_fair", "info_session", "resume_prep",
+            "industry_panel", "mentorship", "internship_info", "entrepreneurship",
+        ],
+        "religious": [],
+        "cultural": [],
+        "social": [
+            "hangout", "game_night", "party", "speed_friending",
+            "mixer", "themed_event", "holiday_social",
+        ],
+        "physical_health": [],
+        "mental_health": [
+            "mindfulness", "support_group", "self_care", "meditation",
+        ],
+        "wellness": [
+            "yoga", "fitness_class", "mindfulness", "support_group",
+            "self_care", "meditation",
+        ],
+        "volunteering": [
+            "community_service", "fundraiser", "food_bank",
+            "environmental_cleanup", "awareness_campaign",
+        ],
+        "greek_life": [],
+        "music": [
+            "dj_set", "live_concert", "a_cappella", "band_performance",
+            "open_mic", "karaoke", "jam_session", "choir", "orchestra",
+        ],
+        "art": [
+            "visual_arts", "painting", "photography", "arts_crafts",
+            "poetry", "creative_writing", "improv_comedy", "gallery_opening",
+        ],
+        "outdoors": [
+            "hiking", "camping", "rock_climbing", "kayaking",
+            "trail_run", "stargazing",
+        ],
+        "food_drink": [
+            "free_food", "potluck", "cooking_class", "food_tour",
+            "tasting_event", "baking",
+        ],
+        "gaming_tech": [
+            "video_games", "board_games", "tabletop_rpg", "esports",
+            "coding_workshop", "ctf_security",
+        ],
+        "entertainment": [
+            "movie_screening", "comedy_show", "drag_show", "escape_room",
+        ],
+        "community_activism": [],
+        "hobbies": [],
+        "travel": [],
+        "performing_arts": [],
+        "lgbtq": [],
+        "science_environment": [],
+    },
 
     # --- Vibe / Latent Features ---
     "energy_level":      ["low", "medium", "high"],
@@ -86,6 +101,33 @@ FEATURE_SCHEMA = {
     "skill_barrier":     ["none", "beginner", "intermediate", "advanced"],
     "mood":              ["chill", "energetic", "reflective", "competitive", "creative", "supportive"],
 }
+
+
+def derive_category_views(schema: dict) -> tuple[dict[str, list[str]], list[str], list[str]]:
+    """Derive flat category views from the single hierarchical schema."""
+    primary_to_subcategories = schema["category_hierarchy"]
+    primary_categories = list(primary_to_subcategories.keys())
+
+    subcategories: list[str] = []
+    seen_subcategories = set()
+    for subs in primary_to_subcategories.values():
+        for sub in subs:
+            if sub not in seen_subcategories:
+                seen_subcategories.add(sub)
+                subcategories.append(sub)
+
+    return primary_to_subcategories, primary_categories, subcategories
+
+
+PRIMARY_TO_SUBCATEGORIES, PRIMARY_CATEGORIES, SUBCATEGORIES = derive_category_views(FEATURE_SCHEMA)
+
+FLAT_FEATURE_SCHEMA = {
+    key: value
+    for key, value in FEATURE_SCHEMA.items()
+    if key != "category_hierarchy"
+}
+FLAT_FEATURE_SCHEMA["primary_category"] = PRIMARY_CATEGORIES
+FLAT_FEATURE_SCHEMA["subcategory"] = SUBCATEGORIES
 
 # Precompute the vector index mapping: feature_name -> {value -> index}
 def build_index_map(schema: dict) -> tuple[dict, int]:
@@ -101,7 +143,7 @@ def build_index_map(schema: dict) -> tuple[dict, int]:
         offset += len(values)
     return index_map, offset
 
-INDEX_MAP, VECTOR_DIM = build_index_map(FEATURE_SCHEMA)
+INDEX_MAP, VECTOR_DIM = build_index_map(FLAT_FEATURE_SCHEMA)
 print(f"Vector dimensionality: {VECTOR_DIM}")
 
 
@@ -183,21 +225,38 @@ def initialize_from_onboarding(
     preferred_days: Optional[list[str]] = None,
     preferred_energy: Optional[str] = None,
     preferred_social: Optional[str] = None,
+    primary_weight: float = 1.0,
+    implicit_subcategory_weight: float = 0.35,
+    explicit_subcategory_weight: float = 1.5,
 ) -> None:
     """
     Build the initial user profile vector from onboarding selections.
-    Sets selected features to 1.0 in the user's vector.
+
+    Hierarchical weighting:
+    - selected primary categories get a baseline weight
+    - subcategories under selected primaries get a small implicit weight
+    - explicitly selected subcategories get a larger weight
     """
     user.vector = np.zeros(VECTOR_DIM)
 
     # Category preferences
     for cat in selected_categories:
         if cat in INDEX_MAP["primary_category"]:
-            user.vector[INDEX_MAP["primary_category"][cat]] = 1.0
+            user.vector[INDEX_MAP["primary_category"][cat]] = primary_weight
+
+        for sub in PRIMARY_TO_SUBCATEGORIES.get(cat, []):
+            if sub in INDEX_MAP["subcategory"]:
+                user.vector[INDEX_MAP["subcategory"][sub]] = max(
+                    user.vector[INDEX_MAP["subcategory"][sub]],
+                    implicit_subcategory_weight,
+                )
 
     for sub in selected_subcategories:
         if sub in INDEX_MAP["subcategory"]:
-            user.vector[INDEX_MAP["subcategory"][sub]] = 1.0
+            user.vector[INDEX_MAP["subcategory"][sub]] = max(
+                user.vector[INDEX_MAP["subcategory"][sub]],
+                explicit_subcategory_weight,
+            )
 
     # Mood/vibe preferences
     for mood in selected_moods:
@@ -270,18 +329,13 @@ def recommend_events(
         List of (event_name, similarity_score) tuples, sorted descending.
     """
     # Encode all events into a matrix (num_events x VECTOR_DIM)
-    event_list = []
-    for e in events:
-        if e.name not in attended_events:
-           event_list.append(encode_event(e))
-
-    #event_vectors = np.array([encode_event(e) for e in events])
-    event_vectors = np.array(event_list)
+    candidate_events = [e for e in events if e.name not in attended_events]
+    event_vectors = np.array([encode_event(e) for e in candidate_events])
 
     # Compute all similarities at once via matrix multiplication
     user_norm = np.linalg.norm(user.vector)
     if user_norm == 0:
-        return [(e.name, 0.0) for e in events[:top_n]]
+        return [(e.name, 0.0) for e in candidate_events[:top_n]]
 
     event_norms = np.linalg.norm(event_vectors, axis=1)
     # Avoid division by zero
@@ -291,7 +345,7 @@ def recommend_events(
 
     # Rank and return top N
     ranked_indices = np.argsort(scores)[::-1][:top_n]
-    return [(events[i].name, round(scores[i], 4)) for i in ranked_indices]
+    return [(candidate_events[i].name, round(scores[i], 4)) for i in ranked_indices]
 
 
 # =============================================================================
@@ -473,8 +527,27 @@ def run_demo():
     )
     print(f"User '{user.name}' onboarded.")
     print(f"  Categories: music, art, outdoors")
-    print(f"  Moods: creative, chill")
+    print(f"  Moods: creative, energetic")
     print(f"  Non-zero dims in profile: {int(np.count_nonzero(user.vector))}")
+    print(f"  Weight for selected primary category: 1.0")
+    print(f"  Weight for implicit subcategory under selected primary: 0.35")
+    print(f"  Weight for explicitly selected subcategory: 1.5")
+
+    print("\n--- HIERARCHICAL WEIGHTING CHECK ---")
+    athletics_user = UserProfile(name="Athletics Explorer")
+    initialize_from_onboarding(
+        athletics_user,
+        selected_categories=["athletics"],
+        selected_subcategories=["varsity", "club_sports", "recreational"],
+        selected_moods=[],
+    )
+    for feature_name in ["athletics", "varsity", "intramural"]:
+        index = INDEX_MAP["primary_category"].get(feature_name)
+        if index is not None:
+            print(f"  primary:{feature_name:14s} -> {athletics_user.vector[index]:.2f}")
+            continue
+        index = INDEX_MAP["subcategory"][feature_name]
+        print(f"  subcategory:{feature_name:10s} -> {athletics_user.vector[index]:.2f}")
 
     # --- Step 3: Get initial recommendations (cold start, onboarding only) ---
     print("\n--- INITIAL RECOMMENDATIONS (onboarding only) ---")
