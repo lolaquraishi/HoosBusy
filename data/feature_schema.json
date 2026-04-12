@@ -1,0 +1,27 @@
+{
+  "category_hierarchy": {
+    "athletics":    ["recreational", "club_sports", "varsity", "intramural", "free_play", "pickup_game", "tryout", "watch_party"],
+    "academic":     ["study_group", "tutoring", "lecture", "panel_discussion", "debate", "research_showcase", "hackathon", "workshop", "guest_speaker", "trivia"],
+    "professional": ["networking", "career_fair", "info_session", "resume_prep", "industry_panel", "mentorship", "internship_info", "entrepreneurship"],
+    "social":       ["hangout", "game_night", "party", "speed_friending", "mixer", "themed_event", "holiday_social"],
+    "mental_health":["mindfulness", "support_group", "self_care", "meditation"],
+    "wellness":     ["yoga", "fitness_class", "mindfulness", "support_group", "self_care", "meditation"],
+    "volunteering": ["community_service", "fundraiser", "food_bank", "environmental_cleanup", "awareness_campaign"],
+    "music":        ["dj_set", "live_concert", "a_cappella", "band_performance", "open_mic", "karaoke", "jam_session", "choir", "orchestra"],
+    "art":          ["visual_arts", "painting", "photography", "arts_crafts", "poetry", "creative_writing", "improv_comedy", "gallery_opening"],
+    "outdoors":     ["hiking", "camping", "rock_climbing", "kayaking", "trail_run", "stargazing"],
+    "food_drink":   ["free_food", "potluck", "cooking_class", "food_tour", "tasting_event", "baking"],
+    "gaming_tech":  ["video_games", "board_games", "tabletop_rpg", "esports", "coding_workshop", "ctf_security"],
+    "entertainment":["movie_screening", "comedy_show", "drag_show", "escape_room"]
+  },
+  "mood":             ["chill", "energetic", "reflective", "competitive", "creative", "supportive"],
+  "energy_level":     ["low", "medium", "high"],
+  "social_intensity": ["solo_friendly", "small_group", "large_group", "crowd"],
+  "commitment_level": ["drop_in", "recurring", "multi_session"],
+  "skill_barrier":    ["none", "beginner", "intermediate", "advanced"],
+  "start_time":       ["morning", "afternoon", "evening", "night"],
+  "day_of_week":      ["mon", "tue", "wed", "thu", "fri", "sat", "sun"],
+  "cost":             ["free", "optional", "fully_paid"],
+  "setting":          ["indoor", "outdoor", "hybrid"],
+  "location":         ["on_grounds", "off_grounds"]
+}
