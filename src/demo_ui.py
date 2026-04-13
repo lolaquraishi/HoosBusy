@@ -10,6 +10,7 @@ Two-screen Tkinter application:
 import tkinter as tk
 import os
 from tkinter import ttk
+import json
 
 import cbrs
 
@@ -189,7 +190,7 @@ class OnboardingScreen(tk.Frame):
 class EventFeedScreen(tk.Frame):
 
     def __init__(self, parent, profile, events, schema,
-                 interest_index, interest_dim, context_index, context_dim):
+                 interest_index, interest_dim, context_index, context_dim, on_add_event=None):
         super().__init__(parent)
         self.profile        = profile
         self.events         = events
@@ -198,6 +199,7 @@ class EventFeedScreen(tk.Frame):
         self.interest_dim   = interest_dim
         self.context_index  = context_index
         self.context_dim    = context_dim
+        self.on_add_event   = on_add_event
         self._build()
         self._refresh()
 
@@ -211,6 +213,9 @@ class EventFeedScreen(tk.Frame):
 
         # Horizontal rule (Frame with height 1 as a divider replacement)
         tk.Frame(self, height=1, bg="gray").pack(fill="x", padx=10)
+        if self.on_add_event:
+            tk.Button(header, text="+ Add Event",
+                      command=self.on_add_event).pack(side="right", padx=6)
 
         canvas  = tk.Canvas(self, borderwidth=0)
         vscroll = tk.Scrollbar(self, orient="vertical", command=canvas.yview)
@@ -308,57 +313,202 @@ class EventFeedScreen(tk.Frame):
 
 
 # =============================================================================
-# APP
+
+# =============================================================================
+# ADD EVENT SCREEN
 # =============================================================================
 
-class App(tk.Tk):
+class AddEventScreen(tk.Frame):
 
-    def __init__(self):
-        super().__init__()
-        self.title("CBRS Event Recommender Demo")
-        self.geometry("750x650")
+    def __init__(self, parent, schema, events_path, on_done):
+        super().__init__(parent)
+        self.schema      = schema
+        self.events_path = events_path
+        self.on_done     = on_done
+        self._build()
 
-        self.schema = cbrs.load_schema(SCHEMA_PATH)
-        self.events = cbrs.load_events(EVENTS_PATH)
+    def _build(self):
+        tk.Label(self, text="Add New Event",
+                 font=("TkDefaultFont", 14, "bold")).pack(pady=10)
 
-        (self.interest_index, self.interest_dim,
-         self.context_index,  self.context_dim) = cbrs.setup_vector_space(self.schema)
+        canvas  = tk.Canvas(self, borderwidth=0)
+        vscroll = tk.Scrollbar(self, orient="vertical", command=canvas.yview)
+        canvas.configure(yscrollcommand=vscroll.set)
+        vscroll.pack(side="right", fill="y")
+        canvas.pack(side="left", fill="both", expand=True)
 
-        self._show_onboarding()
+        inner = tk.Frame(canvas)
+        canvas.create_window((0, 0), window=inner, anchor="nw")
+        inner.bind("<Configure>",
+                   lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+        canvas.bind_all("<MouseWheel>",
+                        lambda e: canvas.yview_scroll(-1 * (e.delta // 120), "units"))
 
-    def _show_onboarding(self):
-        self._clear()
-        OnboardingScreen(self, self.schema, on_submit=self._on_submit).pack(
-            fill="both", expand=True)
+        # ── Text fields ──────────────────────────────────────────────────────
+        text_frame = tk.LabelFrame(inner, text="Event details", padx=6, pady=6)
+        text_frame.pack(fill="x", padx=10, pady=6)
 
-    def _on_submit(self, name, selected_categories, selected_subcategories,
-                   selected_moods, preferred_days, preferred_times,
-                   preferred_energy, preferred_social):
-        profile = cbrs.make_profile(name, self.interest_dim, self.context_dim)
-        cbrs.initialize_from_onboarding(
-            profile, self.schema, self.interest_index, self.context_index,
-            selected_categories    = selected_categories,
-            selected_subcategories = selected_subcategories,
-            selected_moods         = selected_moods,
-            preferred_times        = preferred_times,
-            preferred_days         = preferred_days,
-            preferred_energy       = preferred_energy,
-            preferred_social       = preferred_social,
-        )
-        self._show_feed(profile)
+        self.name_var     = self._labeled_entry(text_frame, "Event name *", 0, width=40)
+        self.event_id_var = self._labeled_entry(text_frame, "Event ID *",   1, width=20)
+        tk.Label(text_frame, text="(e.g. evt_031 — must be unique)",
+                 font=("TkDefaultFont", 8), fg="gray").grid(row=1, column=2, sticky="w", padx=4)
 
-    def _show_feed(self, profile):
-        self._clear()
-        EventFeedScreen(
-            self, profile, self.events, self.schema,
-            self.interest_index, self.interest_dim,
-            self.context_index,  self.context_dim,
-        ).pack(fill="both", expand=True)
+        # ── Single-select dropdowns ───────────────────────────────────────────
+        dd_frame = tk.LabelFrame(inner, text="Single-value fields", padx=6, pady=6)
+        dd_frame.pack(fill="x", padx=10, pady=6)
 
-    def _clear(self):
-        for widget in self.winfo_children():
+        self.energy_var     = self._dropdown(dd_frame, "Energy level *",     self.schema["energy_level"],     0)
+        self.cost_var       = self._dropdown(dd_frame, "Cost *",             self.schema["cost"],             1)
+        self.setting_var    = self._dropdown(dd_frame, "Setting *",          self.schema["setting"],          2)
+        self.location_var   = self._dropdown(dd_frame, "Location *",         self.schema["location"],         3)
+        self.social_var     = self._dropdown(dd_frame, "Social intensity *",  self.schema["social_intensity"], 4)
+        self.commitment_var = self._dropdown(dd_frame, "Commitment level *",  self.schema["commitment_level"], 5)
+        self.skill_var      = self._dropdown(dd_frame, "Skill barrier *",    self.schema["skill_barrier"],    6)
+        self.start_var      = self._dropdown(dd_frame, "Start time *",       self.schema["start_time"],       7)
+
+        # ── Checkbox groups ───────────────────────────────────────────────────
+        self.day_vars  = self._checkbox_group(inner, "Days of week *",
+                                              self.schema["day_of_week"], columns=7)
+        self.mood_vars = self._checkbox_group(inner, "Mood *",
+                                              self.schema["mood"], columns=6)
+
+        # Categories with dynamic subcategory reveal
+        categories = list(self.schema["category_hierarchy"].keys())
+        self.cat_vars = self._checkbox_group(
+            inner, "Primary categories *", categories, columns=4,
+            on_change=self._refresh_subcategories)
+
+        self.sub_frame = tk.LabelFrame(inner, text="Subcategories", padx=6, pady=6)
+        self.sub_frame.pack(fill="x", padx=10, pady=6)
+        self.sub_vars  = {}
+        self._refresh_subcategories()
+
+        # ── Error label + submit ──────────────────────────────────────────────
+        self.error_var = tk.StringVar()
+        tk.Label(inner, textvariable=self.error_var,
+                 fg="red", wraplength=500).pack(padx=10, anchor="w")
+
+        btn_row = tk.Frame(inner)
+        btn_row.pack(pady=12)
+        tk.Button(btn_row, text="Save Event", command=self._submit,
+                  width=16).pack(side="left", padx=6)
+        tk.Button(btn_row, text="Cancel",     command=self.on_done,
+                  width=10).pack(side="left")
+
+    # ── Widget helpers ────────────────────────────────────────────────────────
+
+    def _labeled_entry(self, parent, label, row, width=30):
+        tk.Label(parent, text=label).grid(row=row, column=0, sticky="w", pady=3)
+        var = tk.StringVar()
+        tk.Entry(parent, textvariable=var, width=width).grid(
+            row=row, column=1, sticky="w", padx=6, pady=3)
+        return var
+
+    def _dropdown(self, parent, label, options, row):
+        tk.Label(parent, text=label).grid(row=row, column=0, sticky="w", pady=2)
+        var = tk.StringVar(value=options[0])
+        ttk.Combobox(parent, textvariable=var, values=options,
+                     state="readonly", width=18).grid(
+            row=row, column=1, sticky="w", padx=6, pady=2)
+        return var
+
+    def _checkbox_group(self, parent, label, options, columns=4, on_change=None):
+        frame = tk.LabelFrame(parent, text=label, padx=6, pady=6)
+        frame.pack(fill="x", padx=10, pady=6)
+        vars_dict = {}
+        for i, opt in enumerate(options):
+            var = tk.BooleanVar()
+            if on_change:
+                var.trace_add("write", on_change)
+            vars_dict[opt] = var
+            tk.Checkbutton(frame, text=opt.replace("_", " "),
+                           variable=var).grid(row=i // columns, column=i % columns,
+                                              sticky="w", padx=4, pady=1)
+        return vars_dict
+
+    def _refresh_subcategories(self, *args):
+        for widget in self.sub_frame.winfo_children():
             widget.destroy()
 
+        hierarchy     = self.schema["category_hierarchy"]
+        selected_cats = [k for k, v in self.cat_vars.items() if v.get()]
+        visible_subs  = []
+        for cat in selected_cats:
+            for sub in hierarchy.get(cat, []):
+                if sub not in visible_subs:
+                    visible_subs.append(sub)
 
-if __name__ == "__main__":
-    App().mainloop()
+        if not visible_subs:
+            tk.Label(self.sub_frame,
+                     text="Select a category above to see subcategories.",
+                     fg="gray").grid(row=0, column=0, sticky="w")
+            self.sub_vars = {}
+            return
+
+        new_sub_vars = {}
+        columns = 5
+        for i, sub in enumerate(visible_subs):
+            var = self.sub_vars.get(sub, tk.BooleanVar())
+            new_sub_vars[sub] = var
+            tk.Checkbutton(self.sub_frame, text=sub.replace("_", " "),
+                           variable=var).grid(row=i // columns, column=i % columns,
+                                              sticky="w", padx=4, pady=1)
+        self.sub_vars = new_sub_vars
+
+    # ── Validation + save ─────────────────────────────────────────────────────
+
+    def _validate(self):
+        errors = []
+        if not self.name_var.get().strip():
+            errors.append("Event name is required.")
+        if not self.event_id_var.get().strip():
+            errors.append("Event ID is required.")
+        if not any(v.get() for v in self.day_vars.values()):
+            errors.append("Select at least one day of the week.")
+        if not any(v.get() for v in self.mood_vars.values()):
+            errors.append("Select at least one mood.")
+        if not any(v.get() for v in self.cat_vars.values()):
+            errors.append("Select at least one primary category.")
+        return errors
+
+    def _submit(self):
+        errors = self._validate()
+        if errors:
+            self.error_var.set("⚠ " + "  |  ".join(errors))
+            return
+        self.error_var.set("")
+
+        new_event = {
+            "event_id":         self.event_id_var.get().strip(),
+            "name":             self.name_var.get().strip(),
+            "start_time":       self.start_var.get(),
+            "day_of_week":      [k for k, v in self.day_vars.items()  if v.get()],
+            "cost":             self.cost_var.get(),
+            "setting":          self.setting_var.get(),
+            "location":         self.location_var.get(),
+            "primary_category": [k for k, v in self.cat_vars.items()  if v.get()],
+            "subcategory":      [k for k, v in self.sub_vars.items()   if v.get()],
+            "energy_level":     self.energy_var.get(),
+            "social_intensity": self.social_var.get(),
+            "commitment_level": self.commitment_var.get(),
+            "skill_barrier":    self.skill_var.get(),
+            "mood":             [k for k, v in self.mood_vars.items()  if v.get()],
+        }
+
+        # Load → append → write back
+        with open(self.events_path, "r") as f:
+            events = json.load(f)
+
+        # Duplicate ID check
+        existing_ids = {e["event_id"] for e in events}
+        if new_event["event_id"] in existing_ids:
+            self.error_var.set(f"⚠ Event ID '{new_event['event_id']}' already exists.")
+            return
+
+        events.append(new_event)
+        with open(self.events_path, "w") as f:
+            json.dump(events, f, indent=2)
+
+        self.on_done(new_event)
+
+
