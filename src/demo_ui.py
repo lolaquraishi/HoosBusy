@@ -58,24 +58,16 @@ class OnboardingScreen(tk.Frame):
 
         # Category checkboxes -- derive from hierarchy
         categories = list(self.schema["category_hierarchy"].keys())
-        self.cat_vars = self._checkbox_group(inner, "Interest areas", categories, columns=4)
+        self.cat_vars = self._checkbox_group(
+            inner, "Interest areas", categories, columns=4,
+            on_change=self._refresh_subcategories
+        )
 
-        # Subcategory checkboxes -- show a useful subset
-        display_subs = [
-            "hiking", "rock_climbing", "trail_run", "stargazing",
-            "live_concert", "open_mic", "a_cappella", "karaoke",
-            "hackathon", "coding_workshop", "ctf_security", "board_games",
-            "arts_crafts", "creative_writing", "poetry", "photography",
-            "networking", "career_fair", "resume_prep", "info_session",
-            "yoga", "meditation", "mindfulness", "self_care",
-            "food_bank", "community_service", "environmental_cleanup",
-            "pickup_game", "intramural", "varsity",
-            "panel_discussion", "research_showcase", "lecture", "trivia",
-            "video_games", "esports", "tabletop_rpg", "game_night",
-            "party", "mixer", "speed_friending", "hangout",
-            "cooking_class", "potluck", "improv_comedy", "movie_screening",
-        ]
-        self.sub_vars = self._checkbox_group(inner, "Specific interests", display_subs, columns=4)
+        # Subcategory frame -- populated dynamically
+        self.sub_frame = tk.LabelFrame(inner, text="Specific interests", padx=6, pady=6)
+        self.sub_frame.pack(fill="x", padx=10, pady=6)
+        self.sub_vars = {}
+        self._refresh_subcategories()  # initialize as empty
 
         # Mood checkboxes
         self.mood_vars = self._checkbox_group(inner, "Vibe you are looking for",
@@ -98,12 +90,15 @@ class OnboardingScreen(tk.Frame):
         tk.Button(inner, text="Get Recommendations",
                   command=self._submit, width=25).pack(pady=16)
 
-    def _checkbox_group(self, parent, label, options, columns=4):
+
+    def _checkbox_group(self, parent, label, options, columns=4, on_change=None):
         frame = tk.LabelFrame(parent, text=label, padx=6, pady=6)
         frame.pack(fill="x", padx=10, pady=6)
         vars_dict = {}
         for i, opt in enumerate(options):
             var = tk.BooleanVar()
+            if on_change:
+                var.trace_add("write", on_change)  # fires on check/uncheck
             vars_dict[opt] = var
             tk.Checkbutton(frame, text=opt.replace("_", " "),
                            variable=var).grid(row=i // columns, column=i % columns,
@@ -130,6 +125,61 @@ class OnboardingScreen(tk.Frame):
             preferred_energy       = self.energy_var.get() or None,
             preferred_social       = self.social_var.get() or None,
         )
+
+    def _refresh_subcategories(self, *args):
+        # Clear existing checkboxes
+        for widget in self.sub_frame.winfo_children():
+            widget.destroy()
+
+        # Determine which subcategories to show based on selected categories
+        hierarchy = self.schema["category_hierarchy"]
+        selected_cats = [k for k, v in self.cat_vars.items() if v.get()]
+
+        # Collect eligible subcategories in hierarchy order, filtered by the
+        # hardcoded display list so you don't show every subcategory
+        display_subs = [
+            "hiking", "rock_climbing", "trail_run", "stargazing",
+            "live_concert", "open_mic", "a_cappella", "karaoke",
+            "hackathon", "coding_workshop", "ctf_security", "board_games",
+            "arts_crafts", "creative_writing", "poetry", "photography",
+            "networking", "career_fair", "resume_prep", "info_session",
+            "yoga", "meditation", "mindfulness", "self_care",
+            "food_bank", "community_service", "environmental_cleanup",
+            "pickup_game", "intramural", "varsity",
+            "panel_discussion", "research_showcase", "lecture", "trivia",
+            "video_games", "esports", "tabletop_rpg", "game_night",
+            "party", "mixer", "speed_friending", "hangout",
+            "cooking_class", "potluck", "improv_comedy", "movie_screening",
+        ]
+        display_set = set(display_subs)
+
+        visible_subs = []
+        for cat in selected_cats:
+            for sub in hierarchy.get(cat, []):
+                if sub in display_set and sub not in visible_subs:
+                    visible_subs.append(sub)
+
+        if not visible_subs:
+            tk.Label(self.sub_frame,
+                     text="Select a category above to see specific interests.",
+                     fg="gray").grid(row=0, column=0, sticky="w")
+            # Clear any stale sub_vars so deselecting a category drops its subs
+            self.sub_vars = {}
+            return
+
+        # Preserve prior selections for subcategories still visible
+        new_sub_vars = {}
+        columns = 4
+        for i, sub in enumerate(visible_subs):
+            var = self.sub_vars.get(sub, tk.BooleanVar())
+            new_sub_vars[sub] = var
+            tk.Checkbutton(
+                self.sub_frame,
+                text=sub.replace("_", " "),
+                variable=var
+            ).grid(row=i // columns, column=i % columns, sticky="w", padx=4, pady=1)
+
+        self.sub_vars = new_sub_vars
 
 
 # =============================================================================
