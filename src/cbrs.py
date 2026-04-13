@@ -56,7 +56,7 @@ CONTEXT_WEIGHT  = 0.25   # context similarity contributes 25%
 
 # How strongly each interaction type shifts the profile (see Section 5)
 INTERACTION_WEIGHTS = {
-    "interested":  0.20,
+    "interested":  0.30,
     "skip":       -0.05,
 }
 

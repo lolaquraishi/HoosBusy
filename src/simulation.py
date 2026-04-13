@@ -21,15 +21,14 @@ SCHEMA_PATH     = os.path.join(os.path.dirname(__file__), "../data", "feature_sc
 EVENTS_PATH     = os.path.join(os.path.dirname(__file__), "../data", "events.json")
 ARCHETYPES_PATH = os.path.join(os.path.dirname(__file__), "../data", "archetypes.json")
 
-NUM_STEPS   = 30    # number of interaction steps to simulate per user
+NUM_STEPS   = 10    # number of interaction steps to simulate per user
 TOP_N       = 10    # events recommended per step
-DECAY       = 0.85  # EMA decay: how much of the old profile is kept each update
+DECAY       = 0.90  # EMA decay: how much of the old profile is kept each update
 RANDOM_SEED = 42    # set to None for a different result each run
 
 # Noise applied to onboarding (0.4 = each preference scaled down by 0-40%)
 # Higher noise = estimated profile starts further from ground truth
 ONBOARDING_NOISE = 0.4
-
 
 # =============================================================================
 # HELPERS
@@ -134,20 +133,24 @@ def run_simulation():
             if not recs:
                 break
 
-            # Score each recommended event against the estimated profile
-            # (using estimated scores keeps interactions aligned with what
-            # the user actually sees, rather than privileged ground-truth info)
-            est_scores = [score for _, score in recs]
-            total = sum(est_scores)
-            weights = [s / total for s in est_scores] if total > 0 else [1.0 / len(recs)] * len(recs)
+            # Compute ground-truth scores for the recommended events to determine interactions
+            gt_scores = []
+            for event, _ in recs:
+                gt_score = cbrs.score_event(
+                    ground_truth, event,
+                    interest_index, interest_dim, context_index, context_dim
+                )
+                gt_scores.append(gt_score)
 
-            chosen_idx   = rng.choice(len(recs), p=weights)
-            chosen_event, chosen_score = recs[chosen_idx]
+            total = sum(gt_scores)
+            weights = [s / total for s in gt_scores] if total > 0 else [1.0 / len(recs)] * len(recs)
 
-            # Interaction type: events scoring above median are "interested", below are "skip"
-            median_score = sorted(est_scores)[len(est_scores) // 2]
-            interaction  = "interested" if chosen_score >= median_score else "skip"
+            chosen_idx = rng.choice(len(recs), p=weights)
+            chosen_event, _ = recs[chosen_idx]
 
+            GT_THRESHOLD = 0.35
+            interaction = "interested" if gt_scores[chosen_idx] >= GT_THRESHOLD else "skip"
+            
             cbrs.update_from_interaction(
                 estimated, chosen_event,
                 interest_index, interest_dim, context_index, context_dim,
@@ -157,14 +160,16 @@ def run_simulation():
         final_sim = profile_similarity(estimated, ground_truth)
         print(f"Final similarity  (after {NUM_STEPS} steps):  {final_sim:.4f}")
 
-        # Show top recommendations for this archetype at end state
-        print(f"Top recommendations:")
-        final_recs = cbrs.recommend_events(
+        print(f"Top recommendations (full pool):")
+        attended_backup = estimated["attended_ids"].copy()
+        estimated["attended_ids"] = set()
+        final_recs_full = cbrs.recommend_events(
             estimated, events,
             interest_index, interest_dim, context_index, context_dim,
             top_n=5
         )
-        for rank, (event, score) in enumerate(final_recs, 1):
+        estimated["attended_ids"] = attended_backup
+        for rank, (event, score) in enumerate(final_recs_full, 1):
             print(f"  {rank}. {event['name']:<40} score: {score:.4f}")
         print()
 
