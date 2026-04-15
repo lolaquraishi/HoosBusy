@@ -136,29 +136,7 @@ class OnboardingScreen(tk.Frame):
         hierarchy = self.schema["category_hierarchy"]
         selected_cats = [k for k, v in self.cat_vars.items() if v.get()]
 
-        # Collect eligible subcategories in hierarchy order, filtered by the
-        # hardcoded display list so you don't show every subcategory
-        display_subs = [
-            "hiking", "rock_climbing", "trail_run", "stargazing",
-            "live_concert", "open_mic", "a_cappella", "karaoke",
-            "hackathon", "coding_workshop", "ctf_security", "board_games",
-            "arts_crafts", "creative_writing", "poetry", "photography",
-            "networking", "career_fair", "resume_prep", "info_session",
-            "yoga", "meditation", "mindfulness", "self_care",
-            "food_bank", "community_service", "environmental_cleanup",
-            "pickup_game", "intramural", "varsity",
-            "panel_discussion", "research_showcase", "lecture", "trivia",
-            "video_games", "esports", "tabletop_rpg", "game_night",
-            "party", "mixer", "speed_friending", "hangout",
-            "cooking_class", "potluck", "improv_comedy", "movie_screening",
-        ]
-        display_set = set(display_subs)
-
-        visible_subs = []
-        for cat in selected_cats:
-            for sub in hierarchy.get(cat, []):
-                if sub in display_set and sub not in visible_subs:
-                    visible_subs.append(sub)
+        visible_subs = cbrs.get_visible_subcategories(self.schema, selected_cats)
 
         if not visible_subs:
             tk.Label(self.sub_frame,
@@ -631,3 +609,46 @@ class AddEventScreen(tk.Frame):
         self.on_done(new_event)
 
 
+'''if __name__ == "__main__":
+    import tkinter as tk
+    import json
+    import os
+    import cbrs
+
+    SCHEMA_PATH = os.path.join(os.path.dirname(__file__), "../data", "feature_schema.json")
+    EVENTS_PATH = os.path.join(os.path.dirname(__file__), "../data", "events.json")
+
+    schema = cbrs.load_schema(SCHEMA_PATH)
+    events = cbrs.load_events(EVENTS_PATH)
+
+    interest_index, interest_dim, context_index, context_dim = cbrs.setup_vector_space(schema)
+
+    root = tk.Tk()
+    root.title("Event Recommender")
+
+    def start_app():
+        profile = cbrs.make_profile("User", interest_dim, context_dim)
+        cbrs.initialize_from_onboarding(
+            profile,
+            schema,
+            interest_index,
+            context_index,
+            selected_categories=[],
+            selected_subcategories=[],
+            selected_moods=[]
+        )
+
+        screen = EventFeedScreen(
+            root,
+            profile,
+            events,
+            schema,
+            interest_index,
+            interest_dim,
+            context_index,
+            context_dim
+        )
+        screen.pack(fill="both", expand=True)
+
+    start_app()
+    root.mainloop()'''

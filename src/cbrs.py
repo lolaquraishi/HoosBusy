@@ -75,6 +75,14 @@ def get_categories_and_subcategories(schema):
                 subcategories.append(s)
     return categories, subcategories
 
+def get_visible_subcategories(schema, selected_categories):
+    hierarchy = schema["category_hierarchy"]
+    visible = []
+    for cat in selected_categories:
+        for sub in hierarchy.get(cat, []):
+            if sub not in visible:
+                visible.append(sub)
+    return visible
 
 def build_index_map(feature_keys, schema, categories, subcategories):
     """
