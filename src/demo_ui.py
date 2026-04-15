@@ -344,6 +344,12 @@ class EventFeedScreen(tk.Frame):
 
         def on_remove(e=event):
             self.profile["interested_ids"].discard(e["event_id"])
+            cbrs.update_from_interaction(
+                self.profile, event,
+                self.interest_index, self.interest_dim,
+                self.context_index,  self.context_dim,
+                interaction_type="remove"
+            )
             self._refresh()
             refresh_callback()
 
