@@ -186,7 +186,6 @@ class OnboardingScreen(tk.Frame):
 # =============================================================================
 # EVENT FEED SCREEN
 # =============================================================================
-
 class EventFeedScreen(tk.Frame):
 
     def __init__(self, parent, profile, events, schema,
@@ -208,14 +207,22 @@ class EventFeedScreen(tk.Frame):
         header.pack(fill="x", padx=10, pady=8)
         tk.Label(header, text="Your Recommendations",
                  font=("TkDefaultFont", 13, "bold")).pack(side="left")
-        self.status_var = tk.StringVar()
-        tk.Label(header, textvariable=self.status_var).pack(side="right")
 
-        # Horizontal rule (Frame with height 1 as a divider replacement)
-        tk.Frame(self, height=1, bg="gray").pack(fill="x", padx=10)
         if self.on_add_event:
             tk.Button(header, text="+ Add Event",
-                      command=self.on_add_event).pack(side="right", padx=6)
+                      command=self.on_add_event).pack(side="left", padx=6)
+
+        self.status_var = tk.StringVar()
+        tk.Label(header, textvariable=self.status_var).pack(side="right", padx=6)
+
+        self.interested_count_var = tk.StringVar()
+        tk.Button(header, textvariable=self.interested_count_var,
+                  command=self._show_interested_popup,
+                  relief="flat", cursor="hand2",
+                  font=("TkDefaultFont", 9, "underline"),
+                  fg="blue").pack(side="right")
+
+        tk.Frame(self, height=1, bg="gray").pack(fill="x", padx=10)
 
         canvas  = tk.Canvas(self, borderwidth=0)
         vscroll = tk.Scrollbar(self, orient="vertical", command=canvas.yview)
@@ -247,9 +254,10 @@ class EventFeedScreen(tk.Frame):
 
         self.status_var.set(
             f"Interactions: {self.profile['interaction_count']}  |  "
+            f"Attended: {len(self.profile['attended_ids'])}"
+        )
+        self.interested_count_var.set(
             f"Interested: {len(self.profile['interested_ids'])}  |  "
-            f"Attended: {len(self.profile['attended_ids'])}  |  "
-            f"Showing top {len(recs)}"
         )
 
         if not recs:
@@ -260,11 +268,94 @@ class EventFeedScreen(tk.Frame):
         for rank, (event, score) in enumerate(recs, start=1):
             self._draw_card(rank, event, score)
 
+    def _show_interested_popup(self):
+        popup = tk.Toplevel(self)
+        popup.title("Interested Events")
+        popup.geometry("620x520")
+        popup.grab_set()
+
+        tk.Label(popup, text="Events You're Interested In",
+                 font=("TkDefaultFont", 13, "bold")).pack(pady=(12, 2))
+        tk.Label(popup, text="Click Attended to mark as going, or remove interest.",
+                 fg="gray", font=("TkDefaultFont", 9)).pack()
+
+        canvas  = tk.Canvas(popup, borderwidth=0)
+        vscroll = tk.Scrollbar(popup, orient="vertical", command=canvas.yview)
+        canvas.configure(yscrollcommand=vscroll.set)
+        vscroll.pack(side="right", fill="y")
+        canvas.pack(side="left", fill="both", expand=True)
+
+        inner = tk.Frame(canvas)
+        win   = canvas.create_window((0, 0), window=inner, anchor="nw")
+        inner.bind("<Configure>",
+                   lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+        canvas.bind("<Configure>",
+                    lambda e: canvas.itemconfig(win, width=e.width))
+
+        def refresh_popup():
+            for w in inner.winfo_children():
+                w.destroy()
+            current = [e for e in self.events
+                       if e["event_id"] in self.profile["interested_ids"]]
+            if not current:
+                tk.Label(inner, text="No interested events yet.",
+                         fg="gray").pack(pady=20)
+                return
+            for event in current:
+                self._draw_interested_card(inner, event, refresh_popup)
+
+        refresh_popup()
+        tk.Button(popup, text="Close", command=popup.destroy,
+                  width=12).pack(pady=10)
+
+    def _draw_interested_card(self, parent, event, refresh_callback):
+        card = tk.Frame(parent, relief="ridge", bd=1)
+        card.pack(fill="x", padx=10, pady=4, ipady=4)
+
+        top = tk.Frame(card)
+        top.pack(fill="x", padx=8, pady=(6, 2))
+        tk.Label(top, text=event["name"],
+                 font=("TkDefaultFont", 11, "bold")).pack(side="left")
+
+        cats   = ", ".join(event.get("primary_category", []))
+        detail = (f"{cats}  |  {event.get('energy_level','')} energy  |  "
+                  f"{event.get('setting','')}  |  {event.get('cost','')}")
+        tk.Label(card, text=detail,
+                 font=("TkDefaultFont", 9)).pack(anchor="w", padx=12)
+
+        days  = "/".join(event.get("day_of_week", []))
+        moods = ", ".join(event.get("mood", []))
+        tk.Label(card, text=f"Mood: {moods}  |  {event.get('start_time','')}  |  {days}",
+                 font=("TkDefaultFont", 9)).pack(anchor="w", padx=12)
+
+        btns = tk.Frame(card)
+        btns.pack(anchor="w", padx=8, pady=(4, 4))
+
+        def on_attended(e=event):
+            self.profile["interested_ids"].discard(e["event_id"])
+            cbrs.update_from_interaction(
+                self.profile, e,
+                self.interest_index, self.interest_dim,
+                self.context_index,  self.context_dim,
+                interaction_type="attended"
+            )
+            self._refresh()
+            refresh_callback()
+
+        def on_remove(e=event):
+            self.profile["interested_ids"].discard(e["event_id"])
+            self._refresh()
+            refresh_callback()
+
+        tk.Button(btns, text="Attended",
+                  command=on_attended, width=12).pack(side="left", padx=(0, 6))
+        tk.Button(btns, text="No Longer Interested",
+                  command=on_remove, width=20).pack(side="left")
+
     def _draw_card(self, rank, event, score):
         card = tk.Frame(self.feed, relief="ridge", bd=1)
         card.pack(fill="x", padx=10, pady=4, ipady=4)
 
-        # Name row
         top = tk.Frame(card)
         top.pack(fill="x", padx=8, pady=(6, 2))
         tk.Label(top, text=f"#{rank}", width=3).pack(side="left")
@@ -272,19 +363,16 @@ class EventFeedScreen(tk.Frame):
                  font=("TkDefaultFont", 11, "bold")).pack(side="left", padx=4)
         tk.Label(top, text=f"Score: {score:.2f}").pack(side="right")
 
-        # Detail row
         cats   = ", ".join(event.get("primary_category", []))
         detail = (f"{cats}  |  {event.get('energy_level','')} energy  |  "
                   f"{event.get('setting','')}  |  {event.get('cost','')}")
         tk.Label(card, text=detail, font=("TkDefaultFont", 9)).pack(anchor="w", padx=12)
 
-        # Timing row
         moods  = ", ".join(event.get("mood", []))
         days   = "/".join(event.get("day_of_week", []))
         timing = f"Mood: {moods}  |  {event.get('start_time','')}  |  {days}"
         tk.Label(card, text=timing, font=("TkDefaultFont", 9)).pack(anchor="w", padx=12)
 
-        # Buttons
         btns = tk.Frame(card)
         btns.pack(anchor="w", padx=8, pady=(4, 2))
         tk.Button(btns, text="Attend",
@@ -296,7 +384,7 @@ class EventFeedScreen(tk.Frame):
         tk.Button(btns, text="Skip",
                   command=lambda e=event: self._on_skip(e),
                   width=8).pack(side="left")
-        
+
     def _on_attend(self, event):
         cbrs.update_from_interaction(
             self.profile, event,
@@ -323,8 +411,6 @@ class EventFeedScreen(tk.Frame):
             interaction_type="skip"
         )
         self._refresh()
-
-
 # =============================================================================
 
 # =============================================================================
@@ -407,6 +493,7 @@ class AddEventScreen(tk.Frame):
                   width=16).pack(side="left", padx=6)
         tk.Button(btn_row, text="Cancel",     command=self.on_done,
                   width=10).pack(side="left")
+
 
     # ── Widget helpers ────────────────────────────────────────────────────────
 

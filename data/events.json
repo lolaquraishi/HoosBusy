@@ -824,5 +824,32 @@
       "chill",
       "reflective"
     ]
+  },
+  {
+    "event_id": "31",
+    "name": "Lola",
+    "start_time": "morning",
+    "day_of_week": [
+      "wed",
+      "thu"
+    ],
+    "cost": "optional",
+    "setting": "outdoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "academic",
+      "professional"
+    ],
+    "subcategory": [
+      "tutoring",
+      "lecture"
+    ],
+    "energy_level": "low",
+    "social_intensity": "solo_friendly",
+    "commitment_level": "recurring",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective"
+    ]
   }
 ]
