@@ -58,6 +58,7 @@ CONTEXT_WEIGHT  = 0.25   # context similarity contributes 25%
 INTERACTION_WEIGHTS = {
     "interested":  0.30,
     "skip":       -0.05,
+    "attended":    0.5
 }
 
 
@@ -201,7 +202,8 @@ def make_profile(name, interest_dim, context_dim):
         "interest_vec":      np.zeros(interest_dim),
         "context_vec":       np.zeros(context_dim),
         "interaction_count": 0,
-        "attended_ids":      set()
+        "attended_ids":      set(),
+        "interested_ids":    set()
     }
 
 
@@ -270,6 +272,8 @@ def update_from_interaction(profile, event, interest_index, interest_dim,
         profile["context_vec"]  = np.clip(profile["context_vec"]  + weight * cv, 0, None)
 
     if interaction_type == "interested":
+        profile["interested_ids"].add(event["event_id"])
+    elif interaction_type == "attended":
         profile["attended_ids"].add(event["event_id"])
     profile["interaction_count"] += 1
 
@@ -302,7 +306,7 @@ def recommend_events(profile, events, interest_index, interest_dim,
     """
     results = []
     for event in events:
-        if event["event_id"] in profile["attended_ids"]:
+        if event["event_id"] in profile["attended_ids"] or event["event_id"] in profile["interested_ids"]:
             continue
         s = score_event(profile, event, interest_index, interest_dim, context_index, context_dim)
         results.append((event, s))

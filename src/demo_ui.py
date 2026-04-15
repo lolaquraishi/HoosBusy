@@ -247,7 +247,8 @@ class EventFeedScreen(tk.Frame):
 
         self.status_var.set(
             f"Interactions: {self.profile['interaction_count']}  |  "
-            f"Interested: {len(self.profile['attended_ids'])}  |  "
+            f"Interested: {len(self.profile['interested_ids'])}  |  "
+            f"Attended: {len(self.profile['attended_ids'])}  |  "
             f"Showing top {len(recs)}"
         )
 
@@ -286,12 +287,24 @@ class EventFeedScreen(tk.Frame):
         # Buttons
         btns = tk.Frame(card)
         btns.pack(anchor="w", padx=8, pady=(4, 2))
+        tk.Button(btns, text="Attend",
+                  command=lambda e=event: self._on_attend(e),
+                  width=12).pack(side="left", padx=(0, 6))
         tk.Button(btns, text="Interested",
                   command=lambda e=event: self._on_interested(e),
                   width=12).pack(side="left", padx=(0, 6))
         tk.Button(btns, text="Skip",
                   command=lambda e=event: self._on_skip(e),
                   width=8).pack(side="left")
+        
+    def _on_attend(self, event):
+        cbrs.update_from_interaction(
+            self.profile, event,
+            self.interest_index, self.interest_dim,
+            self.context_index,  self.context_dim,
+            interaction_type="attended"
+        )
+        self._refresh()
 
     def _on_interested(self, event):
         cbrs.update_from_interaction(
