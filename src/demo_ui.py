@@ -349,9 +349,9 @@ class AddEventScreen(tk.Frame):
         text_frame.pack(fill="x", padx=10, pady=6)
 
         self.name_var     = self._labeled_entry(text_frame, "Event name *", 0, width=40)
-        self.event_id_var = self._labeled_entry(text_frame, "Event ID *",   1, width=20)
-        tk.Label(text_frame, text="(e.g. evt_031 — must be unique)",
-                 font=("TkDefaultFont", 8), fg="gray").grid(row=1, column=2, sticky="w", padx=4)
+        #self.event_id_var = self._labeled_entry(text_frame, "Event ID *",   1, width=20)
+        #tk.Label(text_frame, text="(e.g. evt_031 — must be unique)",
+        #         font=("TkDefaultFont", 8), fg="gray").grid(row=1, column=2, sticky="w", padx=4)
 
         # ── Single-select dropdowns ───────────────────────────────────────────
         dd_frame = tk.LabelFrame(inner, text="Single-value fields", padx=6, pady=6)
@@ -461,8 +461,8 @@ class AddEventScreen(tk.Frame):
         errors = []
         if not self.name_var.get().strip():
             errors.append("Event name is required.")
-        if not self.event_id_var.get().strip():
-            errors.append("Event ID is required.")
+        #if not self.event_id_var.get().strip():
+        #    errors.append("Event ID is required.")
         if not any(v.get() for v in self.day_vars.values()):
             errors.append("Select at least one day of the week.")
         if not any(v.get() for v in self.mood_vars.values()):
@@ -478,8 +478,21 @@ class AddEventScreen(tk.Frame):
             return
         self.error_var.set("")
 
+        with open(self.events_path, "r") as f:
+            events = json.load(f)
+        
+        existing_nums = []
+        for e in events:
+            try: 
+                existing_nums.append(int(e.get("event_id", "")))
+            except ValueError:
+                pass
+
+        new_id = str(max(existing_nums, default=0) + 1)
+
         new_event = {
-            "event_id":         self.event_id_var.get().strip(),
+            #"event_id":         self.event_id_var.get().strip(),
+            "event_id":         new_id,
             "name":             self.name_var.get().strip(),
             "start_time":       self.start_var.get(),
             "day_of_week":      [k for k, v in self.day_vars.items()  if v.get()],

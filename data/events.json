@@ -1,6 +1,6 @@
 [
   {
-    "event_id": "evt_001",
+    "event_id": "0",
     "name": "UPC Open Mic Night",
     "start_time": "evening",
     "day_of_week": [
@@ -26,7 +26,7 @@
     ]
   },
   {
-    "event_id": "evt_002",
+    "event_id": "1",
     "name": "Humpback Rock Hike",
     "start_time": "morning",
     "day_of_week": [
@@ -51,7 +51,7 @@
     ]
   },
   {
-    "event_id": "evt_003",
+    "event_id": "2",
     "name": "AI Research Panel",
     "start_time": "afternoon",
     "day_of_week": [
@@ -77,7 +77,7 @@
     ]
   },
   {
-    "event_id": "evt_004",
+    "event_id": "3",
     "name": "Pickup Basketball",
     "start_time": "afternoon",
     "day_of_week": [
@@ -104,7 +104,7 @@
     ]
   },
   {
-    "event_id": "evt_005",
+    "event_id": "4",
     "name": "Pottery Workshop",
     "start_time": "afternoon",
     "day_of_week": [
@@ -129,7 +129,7 @@
     ]
   },
   {
-    "event_id": "evt_006",
+    "event_id": "5",
     "name": "Career Fair",
     "start_time": "morning",
     "day_of_week": [
@@ -154,7 +154,7 @@
     ]
   },
   {
-    "event_id": "evt_007",
+    "event_id": "6",
     "name": "Yoga on the Lawn",
     "start_time": "morning",
     "day_of_week": [
@@ -182,7 +182,7 @@
     ]
   },
   {
-    "event_id": "evt_008",
+    "event_id": "7",
     "name": "HooHacks Hackathon",
     "start_time": "morning",
     "day_of_week": [
@@ -210,7 +210,7 @@
     ]
   },
   {
-    "event_id": "evt_009",
+    "event_id": "8",
     "name": "Board Game Night",
     "start_time": "evening",
     "day_of_week": [
@@ -237,7 +237,7 @@
     ]
   },
   {
-    "event_id": "evt_010",
+    "event_id": "9",
     "name": "Food Bank Volunteering",
     "start_time": "morning",
     "day_of_week": [
@@ -262,7 +262,7 @@
     ]
   },
   {
-    "event_id": "evt_011",
+    "event_id": "10",
     "name": "Jazz Ensemble Concert",
     "start_time": "evening",
     "day_of_week": [
@@ -288,7 +288,7 @@
     ]
   },
   {
-    "event_id": "evt_012",
+    "event_id": "11",
     "name": "CTF Cybersecurity Competition",
     "start_time": "evening",
     "day_of_week": [
@@ -315,7 +315,7 @@
     ]
   },
   {
-    "event_id": "evt_013",
+    "event_id": "12",
     "name": "Springfest",
     "start_time": "evening",
     "day_of_week": [
@@ -341,7 +341,7 @@
     ]
   },
   {
-    "event_id": "evt_014",
+    "event_id": "13",
     "name": "Rock Climbing Club Session",
     "start_time": "afternoon",
     "day_of_week": [
@@ -369,7 +369,7 @@
     ]
   },
   {
-    "event_id": "evt_015",
+    "event_id": "14",
     "name": "Creative Writing Workshop",
     "start_time": "evening",
     "day_of_week": [
@@ -396,7 +396,7 @@
     ]
   },
   {
-    "event_id": "evt_016",
+    "event_id": "15",
     "name": "Trivia Night at Newcomb",
     "start_time": "evening",
     "day_of_week": [
@@ -423,7 +423,7 @@
     ]
   },
   {
-    "event_id": "evt_017",
+    "event_id": "16",
     "name": "Mindfulness and Meditation Circle",
     "start_time": "morning",
     "day_of_week": [
@@ -451,7 +451,7 @@
     ]
   },
   {
-    "event_id": "evt_018",
+    "event_id": "17",
     "name": "Esports Tournament",
     "start_time": "afternoon",
     "day_of_week": [
@@ -478,7 +478,7 @@
     ]
   },
   {
-    "event_id": "evt_019",
+    "event_id": "18",
     "name": "Stargazing Night",
     "start_time": "night",
     "day_of_week": [
@@ -504,7 +504,7 @@
     ]
   },
   {
-    "event_id": "evt_020",
+    "event_id": "19",
     "name": "Speed Friending Social",
     "start_time": "evening",
     "day_of_week": [
@@ -530,7 +530,7 @@
     ]
   },
   {
-    "event_id": "evt_021",
+    "event_id": "20",
     "name": "Trail Run at Rivanna",
     "start_time": "morning",
     "day_of_week": [
@@ -557,7 +557,7 @@
     ]
   },
   {
-    "event_id": "evt_022",
+    "event_id": "21",
     "name": "Comedy Improv Show",
     "start_time": "evening",
     "day_of_week": [
@@ -584,7 +584,7 @@
     ]
   },
   {
-    "event_id": "evt_023",
+    "event_id": "22",
     "name": "Resume Workshop",
     "start_time": "afternoon",
     "day_of_week": [
@@ -611,7 +611,7 @@
     ]
   },
   {
-    "event_id": "evt_024",
+    "event_id": "23",
     "name": "Intramural Soccer",
     "start_time": "afternoon",
     "day_of_week": [
@@ -638,7 +638,7 @@
     ]
   },
   {
-    "event_id": "evt_025",
+    "event_id": "24",
     "name": "Photography Walk",
     "start_time": "afternoon",
     "day_of_week": [
@@ -663,7 +663,7 @@
     ]
   },
   {
-    "event_id": "evt_026",
+    "event_id": "25",
     "name": "Tabletop RPG Night",
     "start_time": "evening",
     "day_of_week": [
@@ -690,7 +690,7 @@
     ]
   },
   {
-    "event_id": "evt_027",
+    "event_id": "26",
     "name": "Environmental Cleanup at Rivanna",
     "start_time": "morning",
     "day_of_week": [
@@ -716,7 +716,7 @@
     ]
   },
   {
-    "event_id": "evt_028",
+    "event_id": "27",
     "name": "Cooking Class: Weeknight Meals",
     "start_time": "evening",
     "day_of_week": [
@@ -742,7 +742,7 @@
     ]
   },
   {
-    "event_id": "evt_029",
+    "event_id": "28",
     "name": "A Cappella Showcase",
     "start_time": "evening",
     "day_of_week": [
@@ -768,7 +768,7 @@
     ]
   },
   {
-    "event_id": "evt_030",
+    "event_id": "29",
     "name": "Guest Lecture: Tech Industry",
     "start_time": "afternoon",
     "day_of_week": [
@@ -794,7 +794,7 @@
     ]
   },
   {
-    "event_id": "evt_1013",
+    "event_id": "30",
     "name": "Lola Teaches Yoga on the Lawn",
     "start_time": "afternoon",
     "day_of_week": [
