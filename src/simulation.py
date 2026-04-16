@@ -113,8 +113,10 @@ def run_simulation():
     print(f"Vector dims  -- Interest: {interest_dim}, Context: {context_dim}")
     print(f"Steps: {NUM_STEPS}  |  Top-N: {TOP_N}  |  Decay: {DECAY}\n")
 
+    similarity_scores = []
     # --- Run each archetype ---
     for archetype in archetypes:
+        similarity_scores_over_steps = []
         print(f"--- {archetype['name'].upper()} ---")
         print(f"{archetype['description']}")
 
@@ -157,7 +159,14 @@ def run_simulation():
                 interaction_type=interaction, decay=DECAY
             )
 
+            similarity_scores_over_steps.append(profile_similarity(estimated, ground_truth))
+
+            if step == NUM_STEPS-1:
+                print(f"Similarity Scores over time: {similarity_scores_over_steps}")
+
+
         final_sim = profile_similarity(estimated, ground_truth)
+        similarity_scores.append(final_sim)
         print(f"Final similarity  (after {NUM_STEPS} steps):  {final_sim:.4f}")
 
         print(f"Top recommendations (full pool):")
@@ -172,6 +181,8 @@ def run_simulation():
         for rank, (event, score) in enumerate(final_recs_full, 1):
             print(f"  {rank}. {event['name']:<40} score: {score:.4f}")
         print()
+
+    print(f"Averag Similarity Score: {np.average(similarity_scores)}")
 
 
 if __name__ == "__main__":
