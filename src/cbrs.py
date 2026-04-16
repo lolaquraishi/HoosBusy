@@ -127,8 +127,8 @@ def setup_vector_space(schema):
 # should still dominate after EMA updates — a broadly tagged event
 # shouldn't fully override a specific user preference.
 
-CATEGORY_ENCODE_WEIGHT    = 1.0
-SUBCATEGORY_ENCODE_WEIGHT = 0.6
+CATEGORY_ENCODE_WEIGHT    = 1
+SUBCATEGORY_ENCODE_WEIGHT = 1.5
 
 
 def encode_event(event, interest_index, interest_dim, context_index, context_dim):
@@ -225,7 +225,7 @@ def initialize_from_onboarding(profile, schema, interest_index, context_index,
 
     for cat in selected_categories:
         if cat in interest_index["category"]:
-            profile["interest_vec"][interest_index["category"][cat]] = 1.0
+            profile["interest_vec"][interest_index["category"][cat]] = CATEGORY_ENCODE_WEIGHT
         for sub in hierarchy.get(cat, []):
             if sub in interest_index["subcategory"]:
                 pos = interest_index["subcategory"][sub]
@@ -234,7 +234,7 @@ def initialize_from_onboarding(profile, schema, interest_index, context_index,
     for sub in selected_subcategories:
         if sub in interest_index["subcategory"]:
             pos = interest_index["subcategory"][sub]
-            profile["interest_vec"][pos] = max(profile["interest_vec"][pos], 1.5)
+            profile["interest_vec"][pos] = max(profile["interest_vec"][pos], SUBCATEGORY_ENCODE_WEIGHT)
 
     for mood in selected_moods:
         if mood in interest_index["mood"]:
