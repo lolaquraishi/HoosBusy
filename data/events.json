@@ -1,10 +1,10 @@
 [
   {
     "event_id": "0",
-    "name": "UPC Open Mic Night",
+    "name": "Open Mic Night",
     "start_time": "evening",
     "day_of_week": [
-      "fri"
+      "sat"
     ],
     "cost": "free",
     "setting": "indoor",
@@ -27,6 +27,239 @@
   },
   {
     "event_id": "1",
+    "name": "Jazz Ensemble Concert",
+    "start_time": "evening",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "music"
+    ],
+    "subcategory": [
+      "orchestra",
+      "live_concert"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "chill",
+      "creative"
+    ]
+  },
+  {
+    "event_id": "2",
+    "name": "A Cappella Showcase",
+    "start_time": "evening",
+    "day_of_week": [
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "music"
+    ],
+    "subcategory": [
+      "a_cappella",
+      "live_concert"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "chill",
+      "creative"
+    ]
+  },
+  {
+    "event_id": "3",
+    "name": "Springfest",
+    "start_time": "evening",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "music",
+      "entertainment",
+      "social"
+    ],
+    "subcategory": [
+      "live_concert"
+    ],
+    "energy_level": "high",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "4",
+    "name": "Singer-Songwriter Night",
+    "start_time": "evening",
+    "day_of_week": [
+      "thu"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "music"
+    ],
+    "subcategory": [
+      "live_concert",
+      "open_mic"
+    ],
+    "energy_level": "low",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "chill",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "5",
+    "name": "Battle of the Bands",
+    "start_time": "evening",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "music",
+      "entertainment"
+    ],
+    "subcategory": [
+      "live_concert"
+    ],
+    "energy_level": "high",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "energetic",
+      "competitive"
+    ]
+  },
+  {
+    "event_id": "6",
+    "name": "Classical Music Recital",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sun"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "music"
+    ],
+    "subcategory": [
+      "orchestra"
+    ],
+    "energy_level": "low",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "7",
+    "name": "DJ Workshop",
+    "start_time": "evening",
+    "day_of_week": [
+      "wed"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "music",
+      "entertainment"
+    ],
+    "subcategory": [
+      "workshop"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "beginner",
+    "mood": [
+      "creative",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "8",
+    "name": "Drum Circle",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "music"
+    ],
+    "subcategory": [
+      "open_mic"
+    ],
+    "energy_level": "high",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "energetic",
+      "creative"
+    ]
+  },
+  {
+    "event_id": "9",
+    "name": "Music Production Workshop",
+    "start_time": "evening",
+    "day_of_week": [
+      "tue"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "music",
+      "academic"
+    ],
+    "subcategory": [
+      "workshop",
+      "coding_workshop"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "intermediate",
+    "mood": [
+      "creative",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "10",
     "name": "Humpback Rock Hike",
     "start_time": "morning",
     "day_of_week": [
@@ -51,33 +284,246 @@
     ]
   },
   {
-    "event_id": "2",
-    "name": "AI Research Panel",
-    "start_time": "afternoon",
+    "event_id": "11",
+    "name": "Trail Run at Rivanna",
+    "start_time": "morning",
     "day_of_week": [
-      "wed"
+      "sat",
+      "sun"
     ],
     "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
+    "setting": "outdoor",
+    "location": "off_grounds",
     "primary_category": [
-      "academic",
-      "professional"
+      "outdoors"
     ],
     "subcategory": [
-      "panel_discussion",
-      "research_showcase"
+      "trail_run",
+      "recreational"
+    ],
+    "energy_level": "high",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "beginner",
+    "mood": [
+      "energetic",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "12",
+    "name": "Stargazing Night",
+    "start_time": "night",
+    "day_of_week": [
+      "fri",
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "outdoors"
+    ],
+    "subcategory": [
+      "stargazing"
     ],
     "energy_level": "low",
-    "social_intensity": "large_group",
+    "social_intensity": "small_group",
     "commitment_level": "drop_in",
     "skill_barrier": "none",
     "mood": [
+      "reflective",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "13",
+    "name": "Environmental Cleanup at Rivanna",
+    "start_time": "morning",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "volunteering"
+    ],
+    "subcategory": [
+      "environmental_cleanup",
+      "awareness_campaign"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "supportive",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "14",
+    "name": "Nature Photography Walk",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sun"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "art",
+      "outdoors"
+    ],
+    "subcategory": [
+      "photography"
+    ],
+    "energy_level": "low",
+    "social_intensity": "solo_friendly",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
       "reflective"
     ]
   },
   {
-    "event_id": "3",
+    "event_id": "15",
+    "name": "Birdwatching Walk",
+    "start_time": "morning",
+    "day_of_week": [
+      "sun"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "outdoors"
+    ],
+    "subcategory": [
+      "recreational"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "chill",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "16",
+    "name": "Mountain Biking at Rivanna",
+    "start_time": "morning",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "outdoors",
+      "athletics"
+    ],
+    "subcategory": [
+      "recreational",
+      "trail_run"
+    ],
+    "energy_level": "high",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "intermediate",
+    "mood": [
+      "energetic",
+      "competitive"
+    ]
+  },
+  {
+    "event_id": "17",
+    "name": "Kayaking Trip",
+    "start_time": "morning",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "optional",
+    "setting": "outdoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "outdoors",
+      "athletics"
+    ],
+    "subcategory": [
+      "recreational"
+    ],
+    "energy_level": "high",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "beginner",
+    "mood": [
+      "energetic",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "18",
+    "name": "Sunrise Hike",
+    "start_time": "morning",
+    "day_of_week": [
+      "sat",
+      "sun"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "outdoors",
+      "wellness"
+    ],
+    "subcategory": [
+      "hiking"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "19",
+    "name": "Frisbee on the Lawn",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "mon",
+      "wed",
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "athletics",
+      "outdoors"
+    ],
+    "subcategory": [
+      "free_play",
+      "recreational"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "energetic",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "20",
     "name": "Pickup Basketball",
     "start_time": "afternoon",
     "day_of_week": [
@@ -104,244 +550,34 @@
     ]
   },
   {
-    "event_id": "4",
-    "name": "Pottery Workshop",
+    "event_id": "21",
+    "name": "Intramural Soccer",
     "start_time": "afternoon",
     "day_of_week": [
-      "sat"
-    ],
-    "cost": "optional",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "art"
-    ],
-    "subcategory": [
-      "arts_crafts"
-    ],
-    "energy_level": "low",
-    "social_intensity": "small_group",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "creative",
-      "chill"
-    ]
-  },
-  {
-    "event_id": "5",
-    "name": "Career Fair",
-    "start_time": "morning",
-    "day_of_week": [
-      "thu"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "professional"
-    ],
-    "subcategory": [
-      "career_fair",
-      "networking"
-    ],
-    "energy_level": "medium",
-    "social_intensity": "crowd",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "competitive"
-    ]
-  },
-  {
-    "event_id": "6",
-    "name": "Yoga on the Lawn",
-    "start_time": "morning",
-    "day_of_week": [
       "mon",
-      "wed",
-      "fri"
+      "wed"
     ],
     "cost": "free",
     "setting": "outdoor",
     "location": "on_grounds",
     "primary_category": [
-      "wellness"
+      "athletics"
     ],
     "subcategory": [
-      "yoga",
-      "self_care"
+      "intramural",
+      "recreational"
     ],
-    "energy_level": "low",
+    "energy_level": "high",
     "social_intensity": "small_group",
     "commitment_level": "recurring",
-    "skill_barrier": "none",
-    "mood": [
-      "chill",
-      "reflective"
-    ]
-  },
-  {
-    "event_id": "7",
-    "name": "HooHacks Hackathon",
-    "start_time": "morning",
-    "day_of_week": [
-      "sat",
-      "sun"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "academic",
-      "gaming_tech"
-    ],
-    "subcategory": [
-      "hackathon",
-      "coding_workshop"
-    ],
-    "energy_level": "high",
-    "social_intensity": "small_group",
-    "commitment_level": "multi_session",
-    "skill_barrier": "intermediate",
+    "skill_barrier": "beginner",
     "mood": [
       "competitive",
-      "creative"
-    ]
-  },
-  {
-    "event_id": "8",
-    "name": "Board Game Night",
-    "start_time": "evening",
-    "day_of_week": [
-      "fri"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "social",
-      "gaming_tech"
-    ],
-    "subcategory": [
-      "board_games",
-      "game_night"
-    ],
-    "energy_level": "low",
-    "social_intensity": "small_group",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "chill",
-      "competitive"
-    ]
-  },
-  {
-    "event_id": "9",
-    "name": "Food Bank Volunteering",
-    "start_time": "morning",
-    "day_of_week": [
-      "sat"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "off_grounds",
-    "primary_category": [
-      "volunteering"
-    ],
-    "subcategory": [
-      "food_bank",
-      "community_service"
-    ],
-    "energy_level": "medium",
-    "social_intensity": "small_group",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "supportive"
-    ]
-  },
-  {
-    "event_id": "10",
-    "name": "Jazz Ensemble Concert",
-    "start_time": "evening",
-    "day_of_week": [
-      "sat"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "music"
-    ],
-    "subcategory": [
-      "orchestra",
-      "live_concert"
-    ],
-    "energy_level": "medium",
-    "social_intensity": "crowd",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "chill",
-      "creative"
-    ]
-  },
-  {
-    "event_id": "11",
-    "name": "CTF Cybersecurity Competition",
-    "start_time": "evening",
-    "day_of_week": [
-      "fri"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "gaming_tech",
-      "academic"
-    ],
-    "subcategory": [
-      "ctf_security",
-      "coding_workshop"
-    ],
-    "energy_level": "high",
-    "social_intensity": "small_group",
-    "commitment_level": "drop_in",
-    "skill_barrier": "intermediate",
-    "mood": [
-      "competitive",
-      "creative"
-    ]
-  },
-  {
-    "event_id": "12",
-    "name": "Springfest",
-    "start_time": "evening",
-    "day_of_week": [
-      "sat"
-    ],
-    "cost": "free",
-    "setting": "outdoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "music",
-      "entertainment",
-      "social"
-    ],
-    "subcategory": [
-      "live_concert"
-    ],
-    "energy_level": "high",
-    "social_intensity": "crowd",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
       "energetic"
     ]
   },
   {
-    "event_id": "13",
+    "event_id": "22",
     "name": "Rock Climbing Club Session",
     "start_time": "afternoon",
     "day_of_week": [
@@ -369,61 +605,224 @@
     ]
   },
   {
-    "event_id": "14",
-    "name": "Creative Writing Workshop",
-    "start_time": "evening",
+    "event_id": "23",
+    "name": "Intramural Volleyball",
+    "start_time": "afternoon",
     "day_of_week": [
-      "tue"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "art",
-      "academic"
-    ],
-    "subcategory": [
-      "creative_writing",
-      "workshop"
-    ],
-    "energy_level": "low",
-    "social_intensity": "small_group",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "creative",
-      "reflective"
-    ]
-  },
-  {
-    "event_id": "15",
-    "name": "Trivia Night at Newcomb",
-    "start_time": "evening",
-    "day_of_week": [
+      "tue",
       "thu"
     ],
     "cost": "free",
     "setting": "indoor",
     "location": "on_grounds",
     "primary_category": [
-      "social",
-      "academic"
+      "athletics"
     ],
     "subcategory": [
-      "trivia",
-      "game_night"
+      "intramural",
+      "recreational"
+    ],
+    "energy_level": "high",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "beginner",
+    "mood": [
+      "competitive",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "24",
+    "name": "Swim Open Hours",
+    "start_time": "morning",
+    "day_of_week": [
+      "mon",
+      "wed",
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "athletics",
+      "wellness"
+    ],
+    "subcategory": [
+      "recreational",
+      "free_play"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "solo_friendly",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "chill",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "25",
+    "name": "Tennis Pickup",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "tue",
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "athletics"
+    ],
+    "subcategory": [
+      "pickup_game",
+      "recreational"
+    ],
+    "energy_level": "high",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "beginner",
+    "mood": [
+      "competitive",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "26",
+    "name": "Flag Football",
+    "start_time": "morning",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "athletics"
+    ],
+    "subcategory": [
+      "intramural",
+      "pickup_game"
+    ],
+    "energy_level": "high",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "beginner",
+    "mood": [
+      "competitive",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "27",
+    "name": "Badminton Open Play",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "mon",
+      "thu"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "athletics"
+    ],
+    "subcategory": [
+      "recreational",
+      "free_play"
     ],
     "energy_level": "medium",
     "social_intensity": "small_group",
     "commitment_level": "drop_in",
     "skill_barrier": "none",
     "mood": [
-      "competitive",
+      "energetic",
       "chill"
     ]
   },
   {
-    "event_id": "16",
+    "event_id": "28",
+    "name": "Ultimate Frisbee League",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "wed"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "athletics"
+    ],
+    "subcategory": [
+      "intramural",
+      "recreational"
+    ],
+    "energy_level": "high",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "beginner",
+    "mood": [
+      "competitive",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "29",
+    "name": "5K Fun Run",
+    "start_time": "morning",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "athletics",
+      "outdoors"
+    ],
+    "subcategory": [
+      "trail_run",
+      "recreational"
+    ],
+    "energy_level": "high",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "beginner",
+    "mood": [
+      "competitive",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "30",
+    "name": "Yoga on the Lawn",
+    "start_time": "morning",
+    "day_of_week": [
+      "mon",
+      "wed",
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "wellness"
+    ],
+    "subcategory": [
+      "yoga",
+      "self_care"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "none",
+    "mood": [
+      "chill",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "31",
     "name": "Mindfulness and Meditation Circle",
     "start_time": "morning",
     "day_of_week": [
@@ -451,350 +850,7 @@
     ]
   },
   {
-    "event_id": "17",
-    "name": "Esports Tournament",
-    "start_time": "afternoon",
-    "day_of_week": [
-      "sat"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "gaming_tech",
-      "entertainment"
-    ],
-    "subcategory": [
-      "esports",
-      "video_games"
-    ],
-    "energy_level": "high",
-    "social_intensity": "crowd",
-    "commitment_level": "drop_in",
-    "skill_barrier": "intermediate",
-    "mood": [
-      "competitive",
-      "energetic"
-    ]
-  },
-  {
-    "event_id": "18",
-    "name": "Stargazing Night",
-    "start_time": "night",
-    "day_of_week": [
-      "fri",
-      "sat"
-    ],
-    "cost": "free",
-    "setting": "outdoor",
-    "location": "off_grounds",
-    "primary_category": [
-      "outdoors"
-    ],
-    "subcategory": [
-      "stargazing"
-    ],
-    "energy_level": "low",
-    "social_intensity": "small_group",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "reflective",
-      "chill"
-    ]
-  },
-  {
-    "event_id": "19",
-    "name": "Speed Friending Social",
-    "start_time": "evening",
-    "day_of_week": [
-      "fri"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "social"
-    ],
-    "subcategory": [
-      "speed_friending",
-      "mixer"
-    ],
-    "energy_level": "medium",
-    "social_intensity": "large_group",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "energetic",
-      "chill"
-    ]
-  },
-  {
-    "event_id": "20",
-    "name": "Trail Run at Rivanna",
-    "start_time": "morning",
-    "day_of_week": [
-      "sat",
-      "sun"
-    ],
-    "cost": "free",
-    "setting": "outdoor",
-    "location": "off_grounds",
-    "primary_category": [
-      "outdoors"
-    ],
-    "subcategory": [
-      "trail_run",
-      "recreational"
-    ],
-    "energy_level": "high",
-    "social_intensity": "small_group",
-    "commitment_level": "drop_in",
-    "skill_barrier": "beginner",
-    "mood": [
-      "energetic",
-      "chill"
-    ]
-  },
-  {
-    "event_id": "21",
-    "name": "Comedy Improv Show",
-    "start_time": "evening",
-    "day_of_week": [
-      "fri",
-      "sat"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "entertainment"
-    ],
-    "subcategory": [
-      "improv_comedy",
-      "comedy_show"
-    ],
-    "energy_level": "medium",
-    "social_intensity": "crowd",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "energetic",
-      "chill"
-    ]
-  },
-  {
-    "event_id": "22",
-    "name": "Resume Workshop",
-    "start_time": "afternoon",
-    "day_of_week": [
-      "tue",
-      "wed"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "professional",
-      "academic"
-    ],
-    "subcategory": [
-      "resume_prep",
-      "workshop"
-    ],
-    "energy_level": "low",
-    "social_intensity": "small_group",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "reflective"
-    ]
-  },
-  {
-    "event_id": "23",
-    "name": "Intramural Soccer",
-    "start_time": "afternoon",
-    "day_of_week": [
-      "mon",
-      "wed"
-    ],
-    "cost": "free",
-    "setting": "outdoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "athletics"
-    ],
-    "subcategory": [
-      "intramural",
-      "recreational"
-    ],
-    "energy_level": "high",
-    "social_intensity": "small_group",
-    "commitment_level": "recurring",
-    "skill_barrier": "beginner",
-    "mood": [
-      "competitive",
-      "energetic"
-    ]
-  },
-  {
-    "event_id": "24",
-    "name": "Photography Walk",
-    "start_time": "afternoon",
-    "day_of_week": [
-      "sun"
-    ],
-    "cost": "free",
-    "setting": "outdoor",
-    "location": "off_grounds",
-    "primary_category": [
-      "art"
-    ],
-    "subcategory": [
-      "photography"
-    ],
-    "energy_level": "low",
-    "social_intensity": "solo_friendly",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "creative",
-      "reflective"
-    ]
-  },
-  {
-    "event_id": "25",
-    "name": "Tabletop RPG Night",
-    "start_time": "evening",
-    "day_of_week": [
-      "sat"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "gaming_tech",
-      "social"
-    ],
-    "subcategory": [
-      "tabletop_rpg",
-      "hangout"
-    ],
-    "energy_level": "low",
-    "social_intensity": "small_group",
-    "commitment_level": "recurring",
-    "skill_barrier": "none",
-    "mood": [
-      "creative",
-      "chill"
-    ]
-  },
-  {
-    "event_id": "26",
-    "name": "Environmental Cleanup at Rivanna",
-    "start_time": "morning",
-    "day_of_week": [
-      "sat"
-    ],
-    "cost": "free",
-    "setting": "outdoor",
-    "location": "off_grounds",
-    "primary_category": [
-      "volunteering"
-    ],
-    "subcategory": [
-      "environmental_cleanup",
-      "awareness_campaign"
-    ],
-    "energy_level": "medium",
-    "social_intensity": "small_group",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "supportive",
-      "energetic"
-    ]
-  },
-  {
-    "event_id": "27",
-    "name": "Cooking Class: Weeknight Meals",
-    "start_time": "evening",
-    "day_of_week": [
-      "wed"
-    ],
-    "cost": "optional",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "food_drink"
-    ],
-    "subcategory": [
-      "cooking_class",
-      "potluck"
-    ],
-    "energy_level": "low",
-    "social_intensity": "small_group",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "chill",
-      "creative"
-    ]
-  },
-  {
-    "event_id": "28",
-    "name": "A Cappella Showcase",
-    "start_time": "evening",
-    "day_of_week": [
-      "fri"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "music"
-    ],
-    "subcategory": [
-      "a_cappella",
-      "live_concert"
-    ],
-    "energy_level": "medium",
-    "social_intensity": "crowd",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "chill",
-      "creative"
-    ]
-  },
-  {
-    "event_id": "29",
-    "name": "Guest Lecture: Tech Industry",
-    "start_time": "afternoon",
-    "day_of_week": [
-      "thu"
-    ],
-    "cost": "free",
-    "setting": "indoor",
-    "location": "on_grounds",
-    "primary_category": [
-      "academic",
-      "professional"
-    ],
-    "subcategory": [
-      "guest_speaker",
-      "info_session"
-    ],
-    "energy_level": "low",
-    "social_intensity": "large_group",
-    "commitment_level": "drop_in",
-    "skill_barrier": "none",
-    "mood": [
-      "reflective"
-    ]
-  },
-  {
-    "event_id": "30",
+    "event_id": "32",
     "name": "Lola Teaches Yoga on the Lawn",
     "start_time": "afternoon",
     "day_of_week": [
@@ -826,7 +882,536 @@
     ]
   },
   {
-    "event_id": "31",
+    "event_id": "33",
+    "name": "Sound Bath Meditation",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sun"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "wellness",
+      "mental_health"
+    ],
+    "subcategory": [
+      "meditation",
+      "mindfulness"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "34",
+    "name": "Tai Chi Morning Practice",
+    "start_time": "morning",
+    "day_of_week": [
+      "tue",
+      "thu"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "wellness",
+      "athletics"
+    ],
+    "subcategory": [
+      "yoga",
+      "fitness_class",
+      "mindfulness"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "35",
+    "name": "Guided Breathwork Session",
+    "start_time": "evening",
+    "day_of_week": [
+      "wed"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "wellness",
+      "mental_health"
+    ],
+    "subcategory": [
+      "self_care",
+      "mindfulness"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "36",
+    "name": "Journaling Workshop",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "tue"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "wellness",
+      "art"
+    ],
+    "subcategory": [
+      "creative_writing",
+      "self_care"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective",
+      "creative"
+    ]
+  },
+  {
+    "event_id": "37",
+    "name": "Fitness Bootcamp",
+    "start_time": "morning",
+    "day_of_week": [
+      "mon",
+      "wed",
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "athletics",
+      "wellness"
+    ],
+    "subcategory": [
+      "fitness_class",
+      "recreational"
+    ],
+    "energy_level": "high",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "none",
+    "mood": [
+      "competitive",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "38",
+    "name": "Stretching and Mobility Class",
+    "start_time": "morning",
+    "day_of_week": [
+      "thu"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "wellness",
+      "athletics"
+    ],
+    "subcategory": [
+      "fitness_class",
+      "self_care"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "chill"
+    ]
+  },
+  {
+    "event_id": "39",
+    "name": "Stress Relief Paint Night",
+    "start_time": "evening",
+    "day_of_week": [
+      "wed"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "wellness",
+      "art"
+    ],
+    "subcategory": [
+      "arts_crafts",
+      "self_care"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "40",
+    "name": "Pottery Workshop",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "art"
+    ],
+    "subcategory": [
+      "arts_crafts"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "41",
+    "name": "Creative Writing Workshop",
+    "start_time": "evening",
+    "day_of_week": [
+      "tue"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "art",
+      "academic"
+    ],
+    "subcategory": [
+      "creative_writing",
+      "workshop"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "42",
+    "name": "Photography Walk",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sun"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "art"
+    ],
+    "subcategory": [
+      "photography"
+    ],
+    "energy_level": "low",
+    "social_intensity": "solo_friendly",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "43",
+    "name": "Watercolor Painting Workshop",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "art"
+    ],
+    "subcategory": [
+      "arts_crafts",
+      "workshop"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "44",
+    "name": "Printmaking Workshop",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "thu"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "art"
+    ],
+    "subcategory": [
+      "arts_crafts"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "45",
+    "name": "Life Drawing Session",
+    "start_time": "evening",
+    "day_of_week": [
+      "wed"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "art"
+    ],
+    "subcategory": [
+      "arts_crafts",
+      "workshop"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "46",
+    "name": "Film Photography Club",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sun"
+    ],
+    "cost": "optional",
+    "setting": "outdoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "art"
+    ],
+    "subcategory": [
+      "photography"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "beginner",
+    "mood": [
+      "creative",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "47",
+    "name": "Spoken Word Open Mic",
+    "start_time": "evening",
+    "day_of_week": [
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "art",
+      "entertainment"
+    ],
+    "subcategory": [
+      "open_mic",
+      "creative_writing"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "48",
+    "name": "Sculpture Workshop",
+    "start_time": "morning",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "art"
+    ],
+    "subcategory": [
+      "arts_crafts"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "49",
+    "name": "Zine Making Workshop",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "tue"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "art",
+      "academic"
+    ],
+    "subcategory": [
+      "arts_crafts",
+      "creative_writing"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "50",
+    "name": "AI Research Panel",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "wed"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "academic",
+      "professional"
+    ],
+    "subcategory": [
+      "panel_discussion",
+      "research_showcase"
+    ],
+    "energy_level": "low",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "51",
+    "name": "Guest Lecture: Tech Industry",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "thu"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "academic",
+      "professional"
+    ],
+    "subcategory": [
+      "guest_speaker",
+      "info_session"
+    ],
+    "energy_level": "low",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "52",
+    "name": "Resume Workshop",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "tue",
+      "wed"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "professional",
+      "academic"
+    ],
+    "subcategory": [
+      "resume_prep",
+      "workshop"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "53",
     "name": "Lola",
     "start_time": "morning",
     "day_of_week": [
@@ -850,6 +1435,1226 @@
     "skill_barrier": "none",
     "mood": [
       "reflective"
+    ]
+  },
+  {
+    "event_id": "54",
+    "name": "Philosophy Discussion Circle",
+    "start_time": "evening",
+    "day_of_week": [
+      "mon"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "academic"
+    ],
+    "subcategory": [
+      "panel_discussion",
+      "workshop"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective",
+      "creative"
+    ]
+  },
+  {
+    "event_id": "55",
+    "name": "Research Poster Session",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "academic"
+    ],
+    "subcategory": [
+      "research_showcase",
+      "info_session"
+    ],
+    "energy_level": "low",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "56",
+    "name": "Debate Club Practice",
+    "start_time": "evening",
+    "day_of_week": [
+      "tue",
+      "thu"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "academic",
+      "professional"
+    ],
+    "subcategory": [
+      "workshop",
+      "panel_discussion"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "none",
+    "mood": [
+      "competitive",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "57",
+    "name": "Book Club",
+    "start_time": "evening",
+    "day_of_week": [
+      "wed"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "academic",
+      "social"
+    ],
+    "subcategory": [
+      "workshop",
+      "hangout"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "58",
+    "name": "Guest Lecture: Environmental Policy",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "tue"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "academic"
+    ],
+    "subcategory": [
+      "guest_speaker",
+      "info_session"
+    ],
+    "energy_level": "low",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective",
+      "supportive"
+    ]
+  },
+  {
+    "event_id": "59",
+    "name": "Language Exchange Meetup",
+    "start_time": "evening",
+    "day_of_week": [
+      "thu"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "academic",
+      "social"
+    ],
+    "subcategory": [
+      "workshop",
+      "mixer"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "60",
+    "name": "HooHacks Hackathon",
+    "start_time": "morning",
+    "day_of_week": [
+      "sat",
+      "sun"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "academic",
+      "gaming_tech"
+    ],
+    "subcategory": [
+      "hackathon",
+      "coding_workshop"
+    ],
+    "energy_level": "high",
+    "social_intensity": "small_group",
+    "commitment_level": "multi_session",
+    "skill_barrier": "intermediate",
+    "mood": [
+      "competitive",
+      "creative"
+    ]
+  },
+  {
+    "event_id": "61",
+    "name": "CTF Cybersecurity Competition",
+    "start_time": "evening",
+    "day_of_week": [
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "gaming_tech",
+      "academic"
+    ],
+    "subcategory": [
+      "ctf_security",
+      "coding_workshop"
+    ],
+    "energy_level": "high",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "intermediate",
+    "mood": [
+      "competitive",
+      "creative"
+    ]
+  },
+  {
+    "event_id": "62",
+    "name": "Esports Tournament",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "gaming_tech",
+      "entertainment"
+    ],
+    "subcategory": [
+      "esports",
+      "video_games"
+    ],
+    "energy_level": "high",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "intermediate",
+    "mood": [
+      "competitive",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "63",
+    "name": "Board Game Night",
+    "start_time": "evening",
+    "day_of_week": [
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "social",
+      "gaming_tech"
+    ],
+    "subcategory": [
+      "board_games",
+      "game_night"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "chill",
+      "competitive"
+    ]
+  },
+  {
+    "event_id": "64",
+    "name": "Tabletop RPG Night",
+    "start_time": "evening",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "gaming_tech",
+      "social"
+    ],
+    "subcategory": [
+      "tabletop_rpg",
+      "hangout"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "65",
+    "name": "Web Dev Workshop",
+    "start_time": "evening",
+    "day_of_week": [
+      "wed"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "gaming_tech",
+      "academic"
+    ],
+    "subcategory": [
+      "coding_workshop",
+      "workshop"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "beginner",
+    "mood": [
+      "creative"
+    ]
+  },
+  {
+    "event_id": "66",
+    "name": "App Pitch Night",
+    "start_time": "evening",
+    "day_of_week": [
+      "thu"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "gaming_tech",
+      "professional"
+    ],
+    "subcategory": [
+      "hackathon",
+      "panel_discussion"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "intermediate",
+    "mood": [
+      "competitive",
+      "creative"
+    ]
+  },
+  {
+    "event_id": "67",
+    "name": "LAN Party",
+    "start_time": "evening",
+    "day_of_week": [
+      "fri",
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "gaming_tech",
+      "social"
+    ],
+    "subcategory": [
+      "video_games",
+      "game_night"
+    ],
+    "energy_level": "high",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "competitive",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "68",
+    "name": "Robotics Club Demo",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "gaming_tech",
+      "academic"
+    ],
+    "subcategory": [
+      "research_showcase",
+      "coding_workshop"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "69",
+    "name": "Data Science Workshop",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "tue"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "gaming_tech",
+      "academic"
+    ],
+    "subcategory": [
+      "coding_workshop",
+      "workshop"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "intermediate",
+    "mood": [
+      "creative",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "70",
+    "name": "Speed Friending Social",
+    "start_time": "evening",
+    "day_of_week": [
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "social"
+    ],
+    "subcategory": [
+      "speed_friending",
+      "mixer"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "energetic",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "71",
+    "name": "Comedy Improv Show",
+    "start_time": "evening",
+    "day_of_week": [
+      "fri",
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "entertainment"
+    ],
+    "subcategory": [
+      "improv_comedy",
+      "comedy_show"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "energetic",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "72",
+    "name": "Trivia Night at Newcomb",
+    "start_time": "evening",
+    "day_of_week": [
+      "thu"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "social",
+      "academic"
+    ],
+    "subcategory": [
+      "trivia",
+      "game_night"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "competitive",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "73",
+    "name": "Cultural Food Fair",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "food_drink",
+      "social"
+    ],
+    "subcategory": [
+      "potluck",
+      "mixer"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "energetic",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "74",
+    "name": "International Students Mixer",
+    "start_time": "evening",
+    "day_of_week": [
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "social"
+    ],
+    "subcategory": [
+      "mixer",
+      "hangout"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "energetic",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "75",
+    "name": "Movie Night on the Lawn",
+    "start_time": "night",
+    "day_of_week": [
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "entertainment",
+      "social"
+    ],
+    "subcategory": [
+      "hangout"
+    ],
+    "energy_level": "low",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "chill"
+    ]
+  },
+  {
+    "event_id": "76",
+    "name": "Transfer Student Social",
+    "start_time": "evening",
+    "day_of_week": [
+      "thu"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "social"
+    ],
+    "subcategory": [
+      "mixer",
+      "speed_friending"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "energetic",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "77",
+    "name": "Alumni Panel: Life After UVA",
+    "start_time": "evening",
+    "day_of_week": [
+      "wed"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "professional",
+      "social"
+    ],
+    "subcategory": [
+      "panel_discussion",
+      "info_session"
+    ],
+    "energy_level": "low",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "78",
+    "name": "Paint & Sip Night",
+    "start_time": "evening",
+    "day_of_week": [
+      "fri"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "art",
+      "social"
+    ],
+    "subcategory": [
+      "arts_crafts",
+      "hangout"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "79",
+    "name": "Cultural Dance Workshop",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "entertainment",
+      "social"
+    ],
+    "subcategory": [
+      "workshop"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "80",
+    "name": "Food Bank Volunteering",
+    "start_time": "morning",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "volunteering"
+    ],
+    "subcategory": [
+      "food_bank",
+      "community_service"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "supportive"
+    ]
+  },
+  {
+    "event_id": "81",
+    "name": "Habitat for Humanity Build Day",
+    "start_time": "morning",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "volunteering"
+    ],
+    "subcategory": [
+      "community_service"
+    ],
+    "energy_level": "high",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "supportive",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "82",
+    "name": "Literacy Tutoring for Kids",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "tue",
+      "thu"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "volunteering",
+      "academic"
+    ],
+    "subcategory": [
+      "tutoring",
+      "community_service"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "none",
+    "mood": [
+      "supportive"
+    ]
+  },
+  {
+    "event_id": "83",
+    "name": "Animal Shelter Volunteering",
+    "start_time": "morning",
+    "day_of_week": [
+      "sat",
+      "sun"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "volunteering"
+    ],
+    "subcategory": [
+      "community_service"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "supportive",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "84",
+    "name": "Senior Center Visit",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "volunteering",
+      "social"
+    ],
+    "subcategory": [
+      "community_service",
+      "hangout"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "none",
+    "mood": [
+      "supportive",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "85",
+    "name": "Park Beautification Day",
+    "start_time": "morning",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "outdoor",
+    "location": "off_grounds",
+    "primary_category": [
+      "volunteering",
+      "outdoors"
+    ],
+    "subcategory": [
+      "environmental_cleanup",
+      "community_service"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "supportive",
+      "energetic"
+    ]
+  },
+  {
+    "event_id": "86",
+    "name": "Cooking Class: Weeknight Meals",
+    "start_time": "evening",
+    "day_of_week": [
+      "wed"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "food_drink"
+    ],
+    "subcategory": [
+      "cooking_class",
+      "potluck"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "chill",
+      "creative"
+    ]
+  },
+  {
+    "event_id": "87",
+    "name": "Coffee Tasting Workshop",
+    "start_time": "morning",
+    "day_of_week": [
+      "sun"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "food_drink"
+    ],
+    "subcategory": [
+      "cooking_class"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "chill",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "88",
+    "name": "International Potluck Dinner",
+    "start_time": "evening",
+    "day_of_week": [
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "food_drink",
+      "social"
+    ],
+    "subcategory": [
+      "potluck",
+      "hangout"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "chill",
+      "creative"
+    ]
+  },
+  {
+    "event_id": "89",
+    "name": "Baking Club",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "food_drink"
+    ],
+    "subcategory": [
+      "cooking_class",
+      "hangout"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "90",
+    "name": "Bubble Tea Tasting",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "thu"
+    ],
+    "cost": "optional",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "food_drink",
+      "social"
+    ],
+    "subcategory": [
+      "hangout"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "chill"
+    ]
+  },
+  {
+    "event_id": "91",
+    "name": "Career Fair",
+    "start_time": "morning",
+    "day_of_week": [
+      "thu"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "professional"
+    ],
+    "subcategory": [
+      "career_fair",
+      "networking"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "competitive"
+    ]
+  },
+  {
+    "event_id": "92",
+    "name": "Mock Interview Practice",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "wed",
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "professional",
+      "academic"
+    ],
+    "subcategory": [
+      "resume_prep",
+      "workshop"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "competitive",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "93",
+    "name": "Networking Coffee Chat",
+    "start_time": "morning",
+    "day_of_week": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "professional",
+      "social"
+    ],
+    "subcategory": [
+      "networking",
+      "hangout"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "94",
+    "name": "Entrepreneurship Pitch Workshop",
+    "start_time": "evening",
+    "day_of_week": [
+      "tue"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "professional",
+      "academic"
+    ],
+    "subcategory": [
+      "workshop",
+      "panel_discussion"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "competitive",
+      "creative"
+    ]
+  },
+  {
+    "event_id": "95",
+    "name": "LinkedIn Profile Workshop",
+    "start_time": "afternoon",
+    "day_of_week": [
+      "mon"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "professional"
+    ],
+    "subcategory": [
+      "resume_prep",
+      "workshop"
+    ],
+    "energy_level": "low",
+    "social_intensity": "small_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "96",
+    "name": "Improv Comedy Jam",
+    "start_time": "evening",
+    "day_of_week": [
+      "wed"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "entertainment",
+      "social"
+    ],
+    "subcategory": [
+      "improv_comedy",
+      "hangout"
+    ],
+    "energy_level": "high",
+    "social_intensity": "small_group",
+    "commitment_level": "recurring",
+    "skill_barrier": "none",
+    "mood": [
+      "energetic",
+      "creative"
+    ]
+  },
+  {
+    "event_id": "97",
+    "name": "Stand-Up Comedy Night",
+    "start_time": "evening",
+    "day_of_week": [
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "entertainment"
+    ],
+    "subcategory": [
+      "comedy_show"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "energetic",
+      "chill"
+    ]
+  },
+  {
+    "event_id": "98",
+    "name": "Theater Performance",
+    "start_time": "evening",
+    "day_of_week": [
+      "fri",
+      "sat"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "entertainment"
+    ],
+    "subcategory": [
+      "live_concert"
+    ],
+    "energy_level": "medium",
+    "social_intensity": "crowd",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "creative",
+      "reflective"
+    ]
+  },
+  {
+    "event_id": "99",
+    "name": "Film Screening and Discussion",
+    "start_time": "evening",
+    "day_of_week": [
+      "fri"
+    ],
+    "cost": "free",
+    "setting": "indoor",
+    "location": "on_grounds",
+    "primary_category": [
+      "entertainment",
+      "academic"
+    ],
+    "subcategory": [
+      "hangout",
+      "panel_discussion"
+    ],
+    "energy_level": "low",
+    "social_intensity": "large_group",
+    "commitment_level": "drop_in",
+    "skill_barrier": "none",
+    "mood": [
+      "reflective",
+      "chill"
     ]
   }
 ]
