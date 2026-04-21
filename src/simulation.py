@@ -23,7 +23,7 @@ EVENTS_PATH     = os.path.join(os.path.dirname(__file__), "../data", "events.jso
 ARCHETYPES_PATH = os.path.join(os.path.dirname(__file__), "../data", "archetypes.json")
 
 NUM_STEPS   = 10    # number of interaction steps to simulate per user
-TOP_N       = 10    # events recommended per step
+TOP_N       = 15    # events recommended per step
 DECAY       = 0.90  # EMA decay: how much of the old profile is kept each update
 RANDOM_SEED = 42    # set to None for a different result each run
 
@@ -134,7 +134,7 @@ def run_simulation():
             recs = cbrs.recommend_events(
                 estimated, events,
                 interest_index, interest_dim, context_index, context_dim,
-                top_n=TOP_N
+                top_n=TOP_N, include_interested=True
             )
             if not recs:
                 break
@@ -153,10 +153,21 @@ def run_simulation():
 
             chosen_idx = rng.choice(len(recs), p=weights)
             chosen_event, _ = recs[chosen_idx]
+            
+            if chosen_event["event_id"] in estimated["interested_ids"]:
+                interested = True
+            else:
+                interested = False
 
-
-            GT_THRESHOLD = 0.35
-            interaction = "interested" if gt_scores[chosen_idx] >= GT_THRESHOLD else "skip"
+            ATTEND_THRESHOLD = 0.5
+            GT_THRESHOLD = 0.4
+            if interested:
+                interaction = "attended" if gt_scores[chosen_idx] >= ATTEND_THRESHOLD else "remove"
+            else:
+                if gt_scores[chosen_idx] >= ATTEND_THRESHOLD:
+                    interaction = "attended"
+                else:
+                    interaction = "interested" if gt_scores[chosen_idx] >= GT_THRESHOLD else "skip"
             
             cbrs.update_from_interaction(
                 estimated, chosen_event,
@@ -164,7 +175,7 @@ def run_simulation():
                 interaction_type=interaction, decay=DECAY
             )
 
-            print(f"Step {step}: User selected {chosen_event['name']}. Updated similarity score: {profile_similarity(estimated, ground_truth)}")
+            print(f"Step {step}: Action={interaction}, Event={chosen_event['name']}. Updated similarity score: {profile_similarity(estimated, ground_truth)}")
 
             similarity_scores_over_steps.append(profile_similarity(estimated, ground_truth))
 

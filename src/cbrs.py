@@ -308,14 +308,16 @@ def score_event(profile, event, interest_index, interest_dim, context_index, con
 
 
 def recommend_events(profile, events, interest_index, interest_dim,
-                     context_index, context_dim, top_n=10):
+                     context_index, context_dim, top_n=10, include_interested=False):
     """
     Score all events and return top N, excluding already-attended ones.
     Returns a list of (event_dict, score) sorted highest score first.
     """
     results = []
     for event in events:
-        if event["event_id"] in profile["attended_ids"] or event["event_id"] in profile["interested_ids"]:
+        if event["event_id"] in profile["attended_ids"]:
+            continue
+        if not include_interested and event["event_id"] in profile["interested_ids"]:
             continue
         s = score_event(profile, event, interest_index, interest_dim, context_index, context_dim)
         results.append((event, s))
