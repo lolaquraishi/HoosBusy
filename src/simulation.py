@@ -12,6 +12,7 @@ Run with: python simulation.py
 import numpy as np
 import os
 import cbrs
+import matplotlib.pyplot as plt
 
 # =============================================================================
 # SETTINGS
@@ -114,6 +115,7 @@ def run_simulation():
     print(f"Steps: {NUM_STEPS}  |  Top-N: {TOP_N}  |  Decay: {DECAY}\n")
 
     similarity_scores = []
+    all_similarity_scores = {}
     # --- Run each archetype ---
     for archetype in archetypes:
         similarity_scores_over_steps = []
@@ -161,8 +163,7 @@ def run_simulation():
 
             similarity_scores_over_steps.append(profile_similarity(estimated, ground_truth))
 
-            if step == NUM_STEPS-1:
-                print(f"Similarity Scores over time: {similarity_scores_over_steps}")
+            all_similarity_scores[archetype["name"]] = similarity_scores_over_steps
 
 
         final_sim = profile_similarity(estimated, ground_truth)
@@ -182,7 +183,26 @@ def run_simulation():
             print(f"  {rank}. {event['name']:<40} score: {score:.4f}")
         print()
 
-    print(f"Averag Similarity Score: {np.average(similarity_scores)}")
+    fig, ax = plt.subplots(figsize=(10, 6))
+    for name, scores in all_similarity_scores.items():
+        ax.plot(range(1, len(scores) + 1), scores, marker="o", label=name)
+
+    ax.set_xlabel("Step")
+    ax.set_ylabel("Profile Similarity")
+    ax.set_title("Profile Similarity Convergence")
+    ax.set_ylim(0.65, 1)
+    ax.grid(True, alpha=0.3)
+    avg_scores = np.mean(list(all_similarity_scores.values()), axis=0)
+    ax.plot(range(1, len(avg_scores) + 1), avg_scores, 
+            color="black", linewidth=2.5, linestyle="--", marker="s", label="Average")
+    ax.annotate(f"{avg_scores[-1]:.4f}", 
+                xy=(len(avg_scores), avg_scores[-1]),
+                xytext=(8, 0), textcoords="offset points",
+                va="center", fontweight="bold")
+    ax.legend()
+    plt.tight_layout()
+    plt.savefig("similarity_over_time.png", dpi=150)
+    plt.show()
 
 
 if __name__ == "__main__":
