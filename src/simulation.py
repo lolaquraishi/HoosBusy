@@ -120,12 +120,14 @@ def run_simulation():
     for archetype in archetypes:
         similarity_scores_over_steps = []
         print(f"--- {archetype['name'].upper()} ---")
-        print(f"{archetype['description']}")
+        print(f"{archetype['description']}\n")
 
         ground_truth = build_ground_truth(
             archetype, interest_index, interest_dim, context_index, context_dim)
         estimated = build_onboarding_profile(
             archetype, interest_index, interest_dim, context_index, context_dim, rng)
+        
+        print(f"Initial similarity score: {profile_similarity(estimated, ground_truth)}")
 
         # --- Interaction loop ---
         for step in range(NUM_STEPS):
@@ -152,6 +154,7 @@ def run_simulation():
             chosen_idx = rng.choice(len(recs), p=weights)
             chosen_event, _ = recs[chosen_idx]
 
+
             GT_THRESHOLD = 0.35
             interaction = "interested" if gt_scores[chosen_idx] >= GT_THRESHOLD else "skip"
             
@@ -160,6 +163,8 @@ def run_simulation():
                 interest_index, interest_dim, context_index, context_dim,
                 interaction_type=interaction, decay=DECAY
             )
+
+            print(f"Step {step}: User selected {chosen_event['name']}. Updated similarity score: {profile_similarity(estimated, ground_truth)}")
 
             similarity_scores_over_steps.append(profile_similarity(estimated, ground_truth))
 
@@ -170,7 +175,7 @@ def run_simulation():
         similarity_scores.append(final_sim)
         print(f"Final similarity  (after {NUM_STEPS} steps):  {final_sim:.4f}")
 
-        print(f"Top recommendations (full pool):")
+        print(f"\nTop recommendations (full pool):")
         attended_backup = estimated["attended_ids"].copy()
         estimated["attended_ids"] = set()
         final_recs_full = cbrs.recommend_events(
