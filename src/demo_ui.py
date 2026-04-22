@@ -16,7 +16,7 @@ import cbrs
 
 SCHEMA_PATH = os.path.join(os.path.dirname(__file__), "../data", "feature_schema.json")
 EVENTS_PATH = os.path.join(os.path.dirname(__file__), "../data", "events.json")
-TOP_N = 10
+TOP_N = 15
 
 
 # =============================================================================

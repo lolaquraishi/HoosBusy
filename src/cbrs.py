@@ -47,9 +47,9 @@ def load_archetypes(path):
 # An index map tells us where in the vector each value lives.
 # e.g. index_map["mood"]["chill"] = 3  means position 3 is the "chill" dimension.
 
-INTEREST_FEATURE_KEYS = ["category", "subcategory", "mood", "energy_level", "skill_barrier"]
+INTEREST_FEATURE_KEYS = ["category", "subcategory"]
 CONTEXT_FEATURE_KEYS  = ["start_time", "day_of_week", "cost", "setting", "location",
-                          "social_intensity", "commitment_level"]
+                          "social_intensity", "commitment_level", "mood", "energy_level", "skill_barrier"]
 
 INTEREST_WEIGHT = 0.75   # interest similarity contributes 75% of the final score
 CONTEXT_WEIGHT  = 0.25   # context similarity contributes 25%
@@ -145,16 +145,16 @@ def encode_event(event, interest_index, interest_dim, context_index, context_dim
             iv[interest_index["subcategory"][sub]] = SUBCATEGORY_ENCODE_WEIGHT
 
     for m in event.get("mood", []):
-        if m in interest_index["mood"]:
-            iv[interest_index["mood"][m]] = 1.0
+        if m in context_index["mood"]:
+            iv[context_index["mood"][m]] = 1.0
 
     energy = event.get("energy_level", "")
-    if energy in interest_index["energy_level"]:
-        iv[interest_index["energy_level"][energy]] = 1.0
+    if energy in context_index["energy_level"]:
+        iv[context_index["energy_level"][energy]] = 1.0
 
     skill = event.get("skill_barrier", "")
-    if skill in interest_index["skill_barrier"]:
-        iv[interest_index["skill_barrier"][skill]] = 1.0
+    if skill in context_index["skill_barrier"]:
+        iv[context_index["skill_barrier"][skill]] = 1.0
 
     start = event.get("start_time", "")
     if start in context_index["start_time"]:
@@ -237,11 +237,11 @@ def initialize_from_onboarding(profile, schema, interest_index, context_index,
             profile["interest_vec"][pos] = max(profile["interest_vec"][pos], SUBCATEGORY_ENCODE_WEIGHT)
 
     for mood in selected_moods:
-        if mood in interest_index["mood"]:
-            profile["interest_vec"][interest_index["mood"][mood]] = 1.0
+        if mood in context_index["mood"]:
+            profile["context_vec"][context_index["mood"][mood]] = 1.0
 
-    if preferred_energy and preferred_energy in interest_index["energy_level"]:
-        profile["interest_vec"][interest_index["energy_level"][preferred_energy]] = 1.0
+    if preferred_energy and preferred_energy in context_index["energy_level"]:
+        profile["context_vec"][context_index["energy_level"][preferred_energy]] = 1.0
 
     if preferred_times:
         for t in preferred_times:
@@ -308,7 +308,7 @@ def score_event(profile, event, interest_index, interest_dim, context_index, con
 
 
 def recommend_events(profile, events, interest_index, interest_dim,
-                     context_index, context_dim, top_n=10, include_interested=False):
+                     context_index, context_dim, top_n=15, include_interested=False):
     """
     Score all events and return top N, excluding already-attended ones.
     Returns a list of (event_dict, score) sorted highest score first.
