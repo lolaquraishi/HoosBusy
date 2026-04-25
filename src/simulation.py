@@ -1,11 +1,10 @@
 """
-simulation.py  --  Archetype Simulation Demo
-=============================================
-Runs the CBRS recommendation loop on a set of pre-defined archetype users
-and measures how well the estimated preference profile converges toward
-each archetype's true preferences over a series of interactions.
+simulation.py -- Archetype simulation.
 
-Edit the settings below to change how the simulation runs.
+Runs the CBRS recommendation loop on pre-defined archetype users and tracks
+how well the estimated profile converges toward each archetype's true preferences
+over a series of simulated interactions.
+
 Run with: python simulation.py
 """
 
@@ -14,32 +13,27 @@ import os
 import cbrs
 import matplotlib.pyplot as plt
 
-# =============================================================================
-# SETTINGS
-# =============================================================================
+# ── Settings ───────────────────────────────────────────────────────────────────
 
 SCHEMA_PATH     = os.path.join(os.path.dirname(__file__), "../data", "feature_schema.json")
 EVENTS_PATH     = os.path.join(os.path.dirname(__file__), "../data", "events.json")
 ARCHETYPES_PATH = os.path.join(os.path.dirname(__file__), "../data", "archetypes.json")
 
-NUM_STEPS   = 10    # number of interaction steps to simulate per user
-TOP_N       = 15    # events recommended per step
-DECAY       = 0.90  # EMA decay: how much of the old profile is kept each update
+NUM_STEPS   = 10    # interaction steps to simulate per archetype
+TOP_N       = 15    # events recommended at each step
+DECAY       = 0.90  # EMA decay -- how much of the old profile is kept each update
 RANDOM_SEED = 42    # set to None for a different result each run
 
-# Noise applied to onboarding (0.4 = each preference scaled down by 0-40%)
-# Higher noise = estimated profile starts further from ground truth
+# Each preference is scaled down by 0-40% at onboarding to simulate imperfect self-expression.
 ONBOARDING_NOISE = 0.4
 
-# =============================================================================
-# HELPERS
-# =============================================================================
+# ── Helpers ────────────────────────────────────────────────────────────────────
 
 def build_ground_truth(archetype, interest_index, interest_dim, context_index, context_dim):
     """
     Build the ideal profile for an archetype directly from its preferences dict.
-    Each preference value (0.0-1.0) maps directly into the vector position
-    for that feature value. This is the target we measure convergence toward.
+    Each preference value (0.0-1.0) is placed at the vector position for that feature value.
+    This is the target we measure convergence toward.
     """
     gt = cbrs.make_profile(archetype["name"] + " [ground truth]", interest_dim, context_dim)
     prefs = archetype.get("preferences", {})
@@ -57,8 +51,8 @@ def build_ground_truth(archetype, interest_index, interest_dim, context_index, c
 def build_onboarding_profile(archetype, interest_index, interest_dim,
                               context_index, context_dim, rng):
     """
-    Build a noisy onboarding profile by scaling each true preference value
-    down by a random factor, simulating imperfect self-expression at onboarding.
+    Build a noisy onboarding profile by randomly scaling each true preference down,
+    simulating how a user might not perfectly express their interests at signup.
     """
     noise   = archetype.get("onboarding_noise", ONBOARDING_NOISE)
     profile = cbrs.make_profile(archetype["name"], interest_dim, context_dim)
@@ -78,9 +72,8 @@ def build_onboarding_profile(archetype, interest_index, interest_dim,
 
 def profile_similarity(profile, ground_truth):
     """
-    Cosine similarity between estimated and ground-truth profiles.
-    Both vectors are unit-normalized so only direction matters, not magnitude.
-    Returns the blended (interest + context) similarity (0.0 to 1.0).
+    Cosine similarity between estimated and ground-truth profiles (0.0 to 1.0).
+    Uses the same interest/context weighting as the main scorer.
     """
     def unit(v):
         n = np.linalg.norm(v)
@@ -92,16 +85,13 @@ def profile_similarity(profile, ground_truth):
     return round(cbrs.INTEREST_WEIGHT * i_sim + cbrs.CONTEXT_WEIGHT * c_sim, 4)
 
 
-# =============================================================================
-# MAIN
-# =============================================================================
+# ── Main ───────────────────────────────────────────────────────────────────────
 
 def run_simulation():
     print("=" * 60)
     print("CBRS ARCHETYPE SIMULATION")
     print("=" * 60)
 
-    # --- Load data ---
     schema     = cbrs.load_schema(SCHEMA_PATH)
     events     = cbrs.load_events(EVENTS_PATH)
     archetypes = cbrs.load_archetypes(ARCHETYPES_PATH)
@@ -116,7 +106,7 @@ def run_simulation():
 
     similarity_scores = []
     all_similarity_scores = {}
-    # --- Run each archetype ---
+
     for archetype in archetypes:
         similarity_scores_over_steps = []
         print(f"--- {archetype['name'].upper()} ---")
@@ -129,7 +119,6 @@ def run_simulation():
         
         print(f"Initial similarity score: {profile_similarity(estimated, ground_truth)}")
 
-        # --- Interaction loop ---
         for step in range(NUM_STEPS):
             recs = cbrs.recommend_events(
                 estimated, events,
@@ -139,7 +128,7 @@ def run_simulation():
             if not recs:
                 break
 
-            # Compute ground-truth scores for the recommended events to determine interactions
+            # Score each recommendation against ground truth to determine realistic interactions
             gt_scores = []
             for event, _ in recs:
                 gt_score = cbrs.score_event(
@@ -148,12 +137,15 @@ def run_simulation():
                 )
                 gt_scores.append(gt_score)
 
+            # Sample an event to interact with, weighted by how well it fits ground truth
             total = sum(gt_scores)
             weights = [s / total for s in gt_scores] if total > 0 else [1.0 / len(recs)] * len(recs)
 
             chosen_idx = rng.choice(len(recs), p=weights)
             chosen_event, _ = recs[chosen_idx]
             
+            # Determine the interaction type based on whether the event was already seen
+            # and how well it matches the archetype's true preferences
             if chosen_event["event_id"] in estimated["interested_ids"]:
                 interested = True
             else:
@@ -186,6 +178,7 @@ def run_simulation():
         similarity_scores.append(final_sim)
         print(f"Final similarity  (after {NUM_STEPS} steps):  {final_sim:.4f}")
 
+        # Show final top-5 recommendations over the full event pool
         print(f"\nTop recommendations (full pool):")
         attended_backup = estimated["attended_ids"].copy()
         estimated["attended_ids"] = set()
@@ -199,6 +192,7 @@ def run_simulation():
             print(f"  {rank}. {event['name']:<40} score: {score:.4f}")
         print()
 
+    # Plot convergence curves for all archetypes plus an average line
     fig, ax = plt.subplots(figsize=(10, 6))
     for name, scores in all_similarity_scores.items():
         ax.plot(range(1, len(scores) + 1), scores, marker="o", label=name)

@@ -1,7 +1,7 @@
 """
-app.py  --  Application entry point
-=====================================
-Handles screen navigation and shared state.
+app.py -- Application entry point.
+
+Manages screen transitions and shared state (schema, events, current user profile).
 Run with: python app.py
 """
 
@@ -75,7 +75,7 @@ class App(tk.Tk):
         ).pack(fill="both", expand=True)
 
     def _on_event_added(self, new_event=None):
-        self.events = cbrs.load_events(EVENTS_PATH)  # reload so new event is scoreable
+        self.events = cbrs.load_events(EVENTS_PATH)
         if self.current_profile is not None:
             self._show_feed()
         else:

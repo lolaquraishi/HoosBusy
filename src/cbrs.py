@@ -1,22 +1,15 @@
 """
-cbrs.py  --  Content-Based Recommender System Core
-====================================================
-Sections:
-  1. Load data (schema, events, archetypes)
-  2. Build index maps from the schema
-  3. Event encoding
-  4. User profile: creation and onboarding initialization
-  5. Profile update from interactions
-  6. Cosine similarity and recommendation
+cbrs.py -- Content-Based Recommender System core logic.
+
+Flow: load schema/events -> build index maps -> encode events as vectors ->
+create user profile -> update profile from interactions -> score and rank events.
 """
 
 import json
 import numpy as np
 
 
-# =============================================================================
-# SECTION 1: LOAD DATA
-# =============================================================================
+# ── Load data ──────────────────────────────────────────────────────────────────
 
 def load_schema(path):
     with open(path, "r") as f:
@@ -31,30 +24,23 @@ def load_archetypes(path):
         return json.load(f)
 
 
-# =============================================================================
-# SECTION 2: BUILD INDEX MAPS
-# =============================================================================
-# Features are split into two groups so interest similarity (what kind of event)
-# can be weighted more heavily than context similarity (when/where/how).
+# ── Build index maps ───────────────────────────────────────────────────────────
+# Each feature's values are assigned consecutive positions in the vector.
+# e.g. index_map["mood"]["chill"] = 3 means dimension 3 represents "chill" mood.
 #
-# Interest: categories, subcategories, mood, energy_level, skill_barrier
-# Context:  start_time, day_of_week, cost, setting, location,
-#           social_intensity, commitment_level
-#
-# Categories and subcategories are derived from the hierarchy in the schema
-# rather than listed separately.
-#
-# An index map tells us where in the vector each value lives.
-# e.g. index_map["mood"]["chill"] = 3  means position 3 is the "chill" dimension.
+# Features are split into two groups:
+#   Interest: what kind of event it is (category, subcategory)
+#   Context:  when/where/how it happens (time, day, cost, setting, etc.)
 
 INTEREST_FEATURE_KEYS = ["category", "subcategory"]
 CONTEXT_FEATURE_KEYS  = ["start_time", "day_of_week", "cost", "setting", "location",
                           "social_intensity", "commitment_level", "mood", "energy_level", "skill_barrier"]
 
-INTEREST_WEIGHT = 0.75   # interest similarity contributes 75% of the final score
-CONTEXT_WEIGHT  = 0.25   # context similarity contributes 25%
+# Interest similarity carries most of the final score; context is a smaller nudge.
+INTEREST_WEIGHT = 0.75
+CONTEXT_WEIGHT  = 0.25
 
-# How strongly each interaction type shifts the profile (see Section 5)
+# How much each interaction type shifts the user profile vector.
 INTERACTION_WEIGHTS = {
     "interested":  0.30,
     "skip":       -0.15,
@@ -64,7 +50,7 @@ INTERACTION_WEIGHTS = {
 
 
 def get_categories_and_subcategories(schema):
-    """Extract ordered category and subcategory lists from the hierarchy."""
+    """Pull the ordered category and subcategory lists out of the schema hierarchy."""
     hierarchy = schema["category_hierarchy"]
     categories = list(hierarchy.keys())
     seen, subcategories = set(), []
@@ -76,6 +62,7 @@ def get_categories_and_subcategories(schema):
     return categories, subcategories
 
 def get_visible_subcategories(schema, selected_categories):
+    """Return subcategories that belong to the currently selected categories."""
     hierarchy = schema["category_hierarchy"]
     visible = []
     for cat in selected_categories:
@@ -86,8 +73,8 @@ def get_visible_subcategories(schema, selected_categories):
 
 def build_index_map(feature_keys, schema, categories, subcategories):
     """
-    Build a position lookup for each feature and its values.
-    Returns (index_map, total_dimensions).
+    Assign a vector position to every value of every feature in feature_keys.
+    Returns (index_map, total vector length).
     """
     index_map = {}
     position  = 0
@@ -105,8 +92,8 @@ def build_index_map(feature_keys, schema, categories, subcategories):
 
 def setup_vector_space(schema):
     """
-    Call once after loading the schema.
-    Returns the index maps and dimensions needed everywhere else.
+    Build both index maps (interest and context) from the schema.
+    Call once at startup; pass the results everywhere that needs them.
     """
     categories, subcategories = get_categories_and_subcategories(schema)
     interest_index, interest_dim = build_index_map(
@@ -116,16 +103,9 @@ def setup_vector_space(schema):
     return interest_index, interest_dim, context_index, context_dim
 
 
-# =============================================================================
-# SECTION 3: EVENT ENCODING
-# =============================================================================
-# Events are plain dicts loaded from JSON.
-# encode_event() turns one event dict into two numpy vectors.
-#
-# Categories encode at 1.0 and subcategories at 0.6 to reflect that
-# the user's onboarding weighting (up to 1.5 for explicit subcategories)
-# should still dominate after EMA updates — a broadly tagged event
-# shouldn't fully override a specific user preference.
+# ── Event encoding ─────────────────────────────────────────────────────────────
+# Turns a raw event dict into two numpy vectors (interest, context).
+# Categories get weight 1.0; subcategories get 1.5 so specific tags dominate.
 
 CATEGORY_ENCODE_WEIGHT    = 1
 SUBCATEGORY_ENCODE_WEIGHT = 1.5
@@ -187,23 +167,15 @@ def encode_event(event, interest_index, interest_dim, context_index, context_dim
     return iv, cv
 
 
-# =============================================================================
-# SECTION 4: USER PROFILE AND ONBOARDING
-# =============================================================================
-# A user profile is a plain dict:
-#   {
-#     "name":              str,
-#     "interest_vec":      np.ndarray,
-#     "context_vec":       np.ndarray,
-#     "interaction_count": int,
-#     "attended_ids":      set
-#   }
+# ── User profile ───────────────────────────────────────────────────────────────
+# A profile is just a dict holding the user's interest and context vectors
+# plus bookkeeping (interaction count, attended/interested event sets).
 #
-# Onboarding weighting tiers:
-#   Selected primary category        -> 1.0
-#   Subcategories under that primary -> 0.35  (implicit interest)
+# Onboarding weights:
+#   Selected category                -> 1.0
+#   Subcategories implied by that    -> 0.35  (implicit interest)
 #   Explicitly selected subcategory  -> 1.5   (strongest signal)
-# The max() call ensures an explicit selection always wins over an implicit one.
+# max() ensures an explicit pick always beats the implicit fallback.
 
 def make_profile(name, interest_dim, context_dim):
     return {
@@ -220,12 +192,13 @@ def initialize_from_onboarding(profile, schema, interest_index, context_index,
                                 selected_categories, selected_subcategories, selected_moods,
                                 preferred_times=None, preferred_days=None,
                                 preferred_energy=None, preferred_social=None):
-    """Set profile vectors from onboarding form selections."""
+    """Populate the profile vectors from the user's onboarding form selections."""
     hierarchy = schema["category_hierarchy"]
 
     for cat in selected_categories:
         if cat in interest_index["category"]:
             profile["interest_vec"][interest_index["category"][cat]] = CATEGORY_ENCODE_WEIGHT
+        # Implicitly boost all subcategories under a selected category
         for sub in hierarchy.get(cat, []):
             if sub in interest_index["subcategory"]:
                 pos = interest_index["subcategory"][sub]
@@ -257,19 +230,16 @@ def initialize_from_onboarding(profile, schema, interest_index, context_index,
         profile["context_vec"][context_index["social_intensity"][preferred_social]] = 1.0
 
 
-# =============================================================================
-# SECTION 5: PROFILE UPDATE FROM INTERACTIONS
-# =============================================================================
-# EMA update rule:
-#   new_profile = decay * old_profile + weight * event_vector
+# ── Profile updates ────────────────────────────────────────────────────────────
+# EMA rule: new_profile = decay * old_profile + weight * event_vector
 #
-# "interested" uses weight +0.20: profile shifts toward the event.
-# "skip"       uses weight -0.05: profile nudges away; clipped at 0.
+# Positive weight -> profile shifts toward the event.
+# Negative weight -> profile nudges away, clipped at 0 (no negative dimensions).
 
 def update_from_interaction(profile, event, interest_index, interest_dim,
                              context_index, context_dim,
                              interaction_type="interested", decay=0.85):
-    """Update the user profile after an interaction with an event."""
+    """Shift the user profile toward or away from an event based on the interaction."""
     iv, cv = encode_event(event, interest_index, interest_dim, context_index, context_dim)
     weight = INTERACTION_WEIGHTS.get(interaction_type, 0.10)
 
@@ -287,9 +257,7 @@ def update_from_interaction(profile, event, interest_index, interest_dim,
     profile["interaction_count"] += 1
 
 
-# =============================================================================
-# SECTION 6: COSINE SIMILARITY AND RECOMMENDATION
-# =============================================================================
+# ── Scoring and recommendations ────────────────────────────────────────────────
 # Final score = 0.75 * interest_similarity + 0.25 * context_similarity
 
 def cosine_similarity(a, b):
@@ -300,7 +268,7 @@ def cosine_similarity(a, b):
 
 
 def score_event(profile, event, interest_index, interest_dim, context_index, context_dim):
-    """Compute blended recommendation score for one event against one user profile."""
+    """Return the blended recommendation score for one event against one profile."""
     iv, cv = encode_event(event, interest_index, interest_dim, context_index, context_dim)
     i_sim = cosine_similarity(profile["interest_vec"], iv)
     c_sim = cosine_similarity(profile["context_vec"],  cv)
@@ -310,8 +278,8 @@ def score_event(profile, event, interest_index, interest_dim, context_index, con
 def recommend_events(profile, events, interest_index, interest_dim,
                      context_index, context_dim, top_n=15, include_interested=False):
     """
-    Score all events and return top N, excluding already-attended ones.
-    Returns a list of (event_dict, score) sorted highest score first.
+    Score every event and return the top N, skipping ones the user already attended.
+    Returns [(event_dict, score), ...] sorted highest score first.
     """
     results = []
     for event in events:

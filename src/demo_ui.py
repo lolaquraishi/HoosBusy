@@ -1,10 +1,10 @@
 """
-demo_ui.py  --  Interactive Demo UI
-=====================================
-Two-screen Tkinter application:
-  Screen 1 -- Onboarding: user fills out their preferences and submits.
-  Screen 2 -- Event feed: recommended events ranked by score.
-              Interested or Skip buttons update the profile and re-rank the list.
+demo_ui.py -- Tkinter UI screens.
+
+Three screens:
+  OnboardingScreen -- user fills in their preferences and submits.
+  EventFeedScreen  -- ranked event cards; Attend/Interested/Skip buttons update the profile.
+  AddEventScreen   -- form to add a new event to events.json.
 """
 
 import tkinter as tk
@@ -19,9 +19,7 @@ EVENTS_PATH = os.path.join(os.path.dirname(__file__), "../data", "events.json")
 TOP_N = 15
 
 
-# =============================================================================
-# ONBOARDING SCREEN
-# =============================================================================
+# ── Onboarding screen ──────────────────────────────────────────────────────────
 
 class OnboardingScreen(tk.Frame):
 
@@ -57,18 +55,18 @@ class OnboardingScreen(tk.Frame):
         self.name_var = tk.StringVar()
         tk.Entry(name_frame, textvariable=self.name_var, width=30).pack(anchor="w")
 
-        # Category checkboxes -- derive from hierarchy
+        # Category checkboxes -- derive from hierarchy; changing these triggers subcategory refresh
         categories = list(self.schema["category_hierarchy"].keys())
         self.cat_vars = self._checkbox_group(
             inner, "Interest areas", categories, columns=4,
             on_change=self._refresh_subcategories
         )
 
-        # Subcategory frame -- populated dynamically
+        # Subcategory checkboxes -- populated dynamically based on selected categories
         self.sub_frame = tk.LabelFrame(inner, text="Specific interests", padx=6, pady=6)
         self.sub_frame.pack(fill="x", padx=10, pady=6)
         self.sub_vars = {}
-        self._refresh_subcategories()  # initialize as empty
+        self._refresh_subcategories()  # start empty until a category is selected
 
         # Mood checkboxes
         self.mood_vars = self._checkbox_group(inner, "Vibe you are looking for",
@@ -128,25 +126,21 @@ class OnboardingScreen(tk.Frame):
         )
 
     def _refresh_subcategories(self, *args):
-        # Clear existing checkboxes
+        # Clear whatever subcategory checkboxes are currently shown
         for widget in self.sub_frame.winfo_children():
             widget.destroy()
 
-        # Determine which subcategories to show based on selected categories
-        hierarchy = self.schema["category_hierarchy"]
         selected_cats = [k for k, v in self.cat_vars.items() if v.get()]
-
         visible_subs = cbrs.get_visible_subcategories(self.schema, selected_cats)
 
         if not visible_subs:
             tk.Label(self.sub_frame,
                      text="Select a category above to see specific interests.",
                      fg="gray").grid(row=0, column=0, sticky="w")
-            # Clear any stale sub_vars so deselecting a category drops its subs
-            self.sub_vars = {}
+            self.sub_vars = {}  # drop stale vars so deselecting a category clears its subs
             return
 
-        # Preserve prior selections for subcategories still visible
+        # Redraw subcategory checkboxes, preserving any existing selections
         new_sub_vars = {}
         columns = 4
         for i, sub in enumerate(visible_subs):
@@ -161,9 +155,8 @@ class OnboardingScreen(tk.Frame):
         self.sub_vars = new_sub_vars
 
 
-# =============================================================================
-# EVENT FEED SCREEN
-# =============================================================================
+# ── Event feed screen ──────────────────────────────────────────────────────────
+
 class EventFeedScreen(tk.Frame):
 
     def __init__(self, parent, profile, events, schema,
@@ -202,6 +195,7 @@ class EventFeedScreen(tk.Frame):
 
         tk.Frame(self, height=1, bg="gray").pack(fill="x", padx=10)
 
+        # Scrollable event list
         canvas  = tk.Canvas(self, borderwidth=0)
         vscroll = tk.Scrollbar(self, orient="vertical", command=canvas.yview)
         canvas.configure(yscrollcommand=vscroll.set)
@@ -219,6 +213,7 @@ class EventFeedScreen(tk.Frame):
         self._canvas = canvas
 
     def _refresh(self):
+        """Re-score all events and redraw the feed from scratch."""
         for widget in self.feed.winfo_children():
             widget.destroy()
         self._canvas.yview_moveto(0)
@@ -247,6 +242,7 @@ class EventFeedScreen(tk.Frame):
             self._draw_card(rank, event, score)
 
     def _show_interested_popup(self):
+        """Open a popup listing all events the user has marked Interested."""
         popup = tk.Toplevel(self)
         popup.title("Interested Events")
         popup.geometry("620x520")
@@ -287,6 +283,7 @@ class EventFeedScreen(tk.Frame):
                   width=12).pack(pady=10)
 
     def _draw_interested_card(self, parent, event, refresh_callback):
+        """Draw a single event card inside the Interested popup."""
         card = tk.Frame(parent, relief="ridge", bd=1)
         card.pack(fill="x", padx=10, pady=4, ipady=4)
 
@@ -337,6 +334,7 @@ class EventFeedScreen(tk.Frame):
                   command=on_remove, width=20).pack(side="left")
 
     def _draw_card(self, rank, event, score):
+        """Draw one ranked event card with Attend / Interested / Skip buttons."""
         card = tk.Frame(self.feed, relief="ridge", bd=1)
         card.pack(fill="x", padx=10, pady=4, ipady=4)
 
@@ -395,11 +393,9 @@ class EventFeedScreen(tk.Frame):
             interaction_type="skip"
         )
         self._refresh()
-# =============================================================================
 
-# =============================================================================
-# ADD EVENT SCREEN
-# =============================================================================
+
+# ── Add event screen ───────────────────────────────────────────────────────────
 
 class AddEventScreen(tk.Frame):
 
@@ -414,6 +410,7 @@ class AddEventScreen(tk.Frame):
         tk.Label(self, text="Add New Event",
                  font=("TkDefaultFont", 14, "bold")).pack(pady=10)
 
+        # Scrollable area
         canvas  = tk.Canvas(self, borderwidth=0)
         vscroll = tk.Scrollbar(self, orient="vertical", command=canvas.yview)
         canvas.configure(yscrollcommand=vscroll.set)
@@ -427,7 +424,7 @@ class AddEventScreen(tk.Frame):
         canvas.bind_all("<MouseWheel>",
                         lambda e: canvas.yview_scroll(-1 * (e.delta // 120), "units"))
 
-        # ── Text fields ──────────────────────────────────────────────────────
+        # Text fields
         text_frame = tk.LabelFrame(inner, text="Event details", padx=6, pady=6)
         text_frame.pack(fill="x", padx=10, pady=6)
 
@@ -436,7 +433,7 @@ class AddEventScreen(tk.Frame):
         #tk.Label(text_frame, text="(e.g. evt_031 — must be unique)",
         #         font=("TkDefaultFont", 8), fg="gray").grid(row=1, column=2, sticky="w", padx=4)
 
-        # ── Single-select dropdowns ───────────────────────────────────────────
+        # Single-select dropdowns
         dd_frame = tk.LabelFrame(inner, text="Single-value fields", padx=6, pady=6)
         dd_frame.pack(fill="x", padx=10, pady=6)
 
@@ -449,13 +446,13 @@ class AddEventScreen(tk.Frame):
         self.skill_var      = self._dropdown(dd_frame, "Skill barrier *",    self.schema["skill_barrier"],    6)
         self.start_var      = self._dropdown(dd_frame, "Start time *",       self.schema["start_time"],       7)
 
-        # ── Checkbox groups ───────────────────────────────────────────────────
+        # Checkbox groups (multi-select)
         self.day_vars  = self._checkbox_group(inner, "Days of week *",
                                               self.schema["day_of_week"], columns=7)
         self.mood_vars = self._checkbox_group(inner, "Mood *",
                                               self.schema["mood"], columns=6)
 
-        # Categories with dynamic subcategory reveal
+        # Category checkboxes; selecting one reveals its subcategories below
         categories = list(self.schema["category_hierarchy"].keys())
         self.cat_vars = self._checkbox_group(
             inner, "Primary categories *", categories, columns=4,
@@ -466,7 +463,7 @@ class AddEventScreen(tk.Frame):
         self.sub_vars  = {}
         self._refresh_subcategories()
 
-        # ── Error label + submit ──────────────────────────────────────────────
+        # Error label + submit/cancel buttons
         self.error_var = tk.StringVar()
         tk.Label(inner, textvariable=self.error_var,
                  fg="red", wraplength=500).pack(padx=10, anchor="w")
@@ -479,7 +476,7 @@ class AddEventScreen(tk.Frame):
                   width=10).pack(side="left")
 
 
-    # ── Widget helpers ────────────────────────────────────────────────────────
+    # ── Widget helpers ─────────────────────────────────────────────────────────
 
     def _labeled_entry(self, parent, label, row, width=30):
         tk.Label(parent, text=label).grid(row=row, column=0, sticky="w", pady=3)
@@ -511,6 +508,7 @@ class AddEventScreen(tk.Frame):
         return vars_dict
 
     def _refresh_subcategories(self, *args):
+        """Redraw subcategory checkboxes to match whichever categories are selected."""
         for widget in self.sub_frame.winfo_children():
             widget.destroy()
 
@@ -539,7 +537,7 @@ class AddEventScreen(tk.Frame):
                                               sticky="w", padx=4, pady=1)
         self.sub_vars = new_sub_vars
 
-    # ── Validation + save ─────────────────────────────────────────────────────
+    # ── Validation + save ──────────────────────────────────────────────────────
 
     def _validate(self):
         errors = []
@@ -565,6 +563,7 @@ class AddEventScreen(tk.Frame):
         with open(self.events_path, "r") as f:
             events = json.load(f)
         
+        # Auto-generate an ID by incrementing the highest existing numeric ID
         existing_nums = []
         for e in events:
             try: 
@@ -592,11 +591,11 @@ class AddEventScreen(tk.Frame):
             "mood":             [k for k, v in self.mood_vars.items()  if v.get()],
         }
 
-        # Load → append → write back
+        # Load -> append -> write back
         with open(self.events_path, "r") as f:
             events = json.load(f)
 
-        # Duplicate ID check
+        # Reject if the ID somehow already exists
         existing_ids = {e["event_id"] for e in events}
         if new_event["event_id"] in existing_ids:
             self.error_var.set(f"⚠ Event ID '{new_event['event_id']}' already exists.")
@@ -607,48 +606,3 @@ class AddEventScreen(tk.Frame):
             json.dump(events, f, indent=2)
 
         self.on_done(new_event)
-
-
-'''if __name__ == "__main__":
-    import tkinter as tk
-    import json
-    import os
-    import cbrs
-
-    SCHEMA_PATH = os.path.join(os.path.dirname(__file__), "../data", "feature_schema.json")
-    EVENTS_PATH = os.path.join(os.path.dirname(__file__), "../data", "events.json")
-
-    schema = cbrs.load_schema(SCHEMA_PATH)
-    events = cbrs.load_events(EVENTS_PATH)
-
-    interest_index, interest_dim, context_index, context_dim = cbrs.setup_vector_space(schema)
-
-    root = tk.Tk()
-    root.title("Event Recommender")
-
-    def start_app():
-        profile = cbrs.make_profile("User", interest_dim, context_dim)
-        cbrs.initialize_from_onboarding(
-            profile,
-            schema,
-            interest_index,
-            context_index,
-            selected_categories=[],
-            selected_subcategories=[],
-            selected_moods=[]
-        )
-
-        screen = EventFeedScreen(
-            root,
-            profile,
-            events,
-            schema,
-            interest_index,
-            interest_dim,
-            context_index,
-            context_dim
-        )
-        screen.pack(fill="both", expand=True)
-
-    start_app()
-    root.mainloop()'''
