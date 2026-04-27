@@ -126,15 +126,15 @@ def encode_event(event, interest_index, interest_dim, context_index, context_dim
 
     for m in event.get("mood", []):
         if m in context_index["mood"]:
-            iv[context_index["mood"][m]] = 1.0
+            cv[context_index["mood"][m]] = 1.0
 
     energy = event.get("energy_level", "")
     if energy in context_index["energy_level"]:
-        iv[context_index["energy_level"][energy]] = 1.0
+        cv[context_index["energy_level"][energy]] = 1.0
 
     skill = event.get("skill_barrier", "")
     if skill in context_index["skill_barrier"]:
-        iv[context_index["skill_barrier"][skill]] = 1.0
+        cv[context_index["skill_barrier"][skill]] = 1.0
 
     start = event.get("start_time", "")
     if start in context_index["start_time"]:
